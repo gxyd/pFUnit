@@ -4,7 +4,7 @@
    public :: __deque_riterator
 
    ! Non type-bound procedures
-   public :: swap
+   !public :: swap
 
    ! Iterator functions
    public :: advance

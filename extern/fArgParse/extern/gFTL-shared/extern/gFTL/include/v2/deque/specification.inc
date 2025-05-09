@@ -61,42 +61,20 @@
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
 
-      ! Accessors
-      !procedure :: at_default => __MANGLE(at_default)
-      !procedure :: of_default => __MANGLE(of_default)
-      !generic :: at => at_default
-      !generic :: at => of_default
-      !generic :: of => of_default
-
-#ifndef  __gftl_disable_index_kind_overload
-#endif
-
-      procedure :: push_back => __MANGLE(push_back)
-      procedure :: pop_back => __MANGLE(pop_back)
-
-      !procedure :: resize_default => __MANGLE(resize_default)
-      !generic :: resize => resize_default
-#ifndef  __gftl_disable_index_kind_overload
-      !generic :: resize => resize_size_kind
-#endif
-
-      !procedure :: clear => __MANGLE(clear)
-      procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
-
       procedure :: erase_one => __MANGLE(erase_one)
       procedure :: erase_range => __MANGLE(erase_range)
       generic :: erase => erase_one
       generic :: erase => erase_range
 
-      procedure :: swap => __MANGLE(swap)
-      procedure :: reset => __MANGLE(reset)
+      !procedure :: swap => __MANGLE(swap)
+      !procedure :: reset => __MANGLE(reset)
 
 
       ! Factory methods for iterators
-      procedure :: begin => __MANGLE(begin)
-      procedure :: end => __MANGLE(end)
-      procedure :: rbegin => __MANGLE(rbegin)
-      procedure :: rend => __MANGLE(rend)
+      !procedure :: begin => __MANGLE(begin)
+      !procedure :: end => __MANGLE(end)
+      !procedure :: rbegin => __MANGLE(rbegin)
+      !procedure :: rend => __MANGLE(rend)
 
       ! No analog for the following in STL, but it seems very convenient.
 #ifdef __T_EQ__
@@ -109,23 +87,20 @@
       ! private helper procedures
       procedure, private :: set_capacity => __MANGLE(set_capacity)
       procedure, private :: grow_to => __MANGLE(grow_to)
-      !procedure, private :: downsize=>__MANGLE(downsize)
-      !procedure, private :: idx => __MANGLE(idx)
       procedure, private :: bucket_index => __MANGLE(bucket_index)
       procedure, private :: bucket_offset => __MANGLE(bucket_offset)
    end type __deque
 
 
-   interface swap
-      module procedure __MANGLE(swap)
-   end interface swap
+   !interface swap
+   !   module procedure __MANGLE(swap)
+   !end interface swap
 
 
 #if defined(__T_EQ__) || defined(__T_LT__)
    interface operator(==)
    end interface operator(==)
    interface operator(/=)
-      !module procedure __MANGLE(not_equal)
    end interface operator(/=)
 
 #endif

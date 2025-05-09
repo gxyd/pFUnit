@@ -97,7 +97,7 @@
       __UNUSED_DUMMY(unused)
 
 
-      call this%container%push_back(value, rc=rc)
+      !call this%container%push_back(value, rc=rc)
 
    end subroutine __MANGLE(push)
 
@@ -108,7 +108,7 @@
    subroutine __MANGLE(pop)(this)
       class(__stack), intent(inout) :: this
 
-      call this%container%pop_back()
+      !call this%container%pop_back()
 
       return
    end subroutine __MANGLE(pop)
@@ -200,7 +200,7 @@
       type(__stack), target, intent(inout) :: x
 
 
-      call this%container%swap(x%container)
+      !call this%container%swap(x%container)
       
       return
    end subroutine __MANGLE(swap)

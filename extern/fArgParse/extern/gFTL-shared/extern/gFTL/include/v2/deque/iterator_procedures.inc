@@ -220,7 +220,7 @@
          type(__deque_iterator__) :: begin
          type(__deque), target, intent(in) :: cont
 
-         begin = cont%begin()
+         !begin = cont%begin()
 
          return
       end function __MANGLE(iter_begin)
@@ -240,7 +240,7 @@
          type(__deque_iterator__) :: end
          type(__deque), target, intent(in) :: cont
 
-         end = cont%end()
+         !end = cont%end()
 
          return
       end function __MANGLE(iter_end)
@@ -250,7 +250,7 @@
          type(__deque_iterator__) :: new_it
          type(__deque_iterator__), intent(in) :: it
 
-         new_it = next(it,1)
+         !new_it = next(it,1)
 
          return
       end function __MANGLE(iter_next_1)
@@ -260,8 +260,8 @@
          type(__deque_iterator__), intent(in) :: it
          integer(kind=__gftl_size_kind), intent(in) :: n
 
-         new_it = it
-         call new_it%add(n)
+         !new_it = it
+         !call new_it%add(n)
 
          return
       end function __MANGLE(iter_next_n_size_kind)
@@ -271,8 +271,8 @@
          type(__deque_iterator__), intent(in) :: it
          integer, intent(in) :: n
 
-         new_it = it
-         call new_it%add(n)
+         !new_it = it
+         !call new_it%add(n)
 
          return
       end function __MANGLE(iter_next_n_default)

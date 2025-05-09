@@ -39,15 +39,6 @@
 #include "parameters/T/define_derived_macros.inc"
 
 
-   !subroutine __MANGLE(unused_procedure)()
-   !   ! The following are an adhoc way to suppress compiler
-   !   ! warnings about parameters not used in this template
-   !   __UNUSED_DUMMY(BAD_ALLOC)
-   !   __UNUSED_DUMMY(TYPE_HAS_NO_DEFAULT_VALUE)
-   !   __UNUSED_DUMMY(NO_TYPE__)
-   !end subroutine __MANGLE(unused_procedure)
-
-
    function __MANGLE(new_deque_range)(first, last) result(v)
       type (__deque) :: v
       type (__deque_iterator__), intent(in) :: first
@@ -57,34 +48,17 @@
 
       iter = first
       do while (iter /= last)
-         call v%push_back(iter%of())
+         !call v%push_back(iter%of())
       end do
 
       return
    end function __MANGLE(new_deque_range)
 
 
-   !function __MANGLE(at_default)(this, i, rc) result(res)
-   !   class(__deque), target, intent(in) :: this
-   !   integer, intent(in) :: i
-   !   __T_declare_result__, pointer :: res
-   !   integer, intent(out) :: rc
-
-   !   !res => this%at(int(i,GFTL_SIZE_KIND),rc)
-
-   !   return
-   !end function __MANGLE(at_default)
 
 
-   !function __MANGLE(of_default)(this, i) result(res)
-   !   class(__deque), target, intent(in) :: this
-   !   integer, intent(in) :: i
-   !   __T_declare_result__, pointer :: res
 
-   !   !res => this%at(int(i,GFTL_SIZE_KIND))
 
-   !   return
-   !end function __MANGLE(of_default)
 
 
    function __MANGLE(back)(this) result(res)
@@ -97,26 +71,12 @@
    end function __MANGLE(back)
 
 
-   !function __MANGLE(front)(this) result(res)
-   !   class(__deque), target, intent(in) :: this
-   !   __T_declare_result__, pointer :: res
 
-   !   res => this%buckets(this%front_)%ptr%bucket_items%item
+   !subroutine __MANGLE(reset)(this)
+   !   class(__deque), intent(inout) :: this
 
-   !   return
-   !end function __MANGLE(front)
 
-   subroutine __MANGLE(reset)(this)
-      class(__deque), intent(inout) :: this
-
-      !if (allocated(this%buckets)) then
-      !   deallocate(this%buckets)
-      !end if
-      !this%front_ = -1
-      !this%back_ = 0
-
-      !return
-   end subroutine __MANGLE(reset)
+   !end subroutine __MANGLE(reset)
 
 
 #ifdef __T_LT__
@@ -175,58 +135,32 @@
    ! =======================
    !  push_back()
    ! =======================
-   subroutine __MANGLE(push_back)(this, value, unused, rc)
-      class(__deque), intent(inout) :: this
-      __T_declare_dummy__, intent(in) :: value
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      integer, optional, intent(out) :: rc
+   !subroutine __MANGLE(push_back)(this, value, unused, rc)
+   !   class(__deque), intent(inout) :: this
+   !   __T_declare_dummy__, intent(in) :: value
+   !   type (KeywordEnforcer), optional, intent(in) :: unused
+   !   integer, optional, intent(out) :: rc
 
-      __UNUSED_DUMMY(unused)
+   !   __UNUSED_DUMMY(unused)
 
-   end subroutine __MANGLE(push_back)
+   !end subroutine __MANGLE(push_back)
 
 
    ! =======================
    !  pop_back()
    ! =======================
-   subroutine __MANGLE(pop_back)(this)
-      class(__deque), intent(inout) :: this
-
-      integer(kind=GFTL_SIZE_KIND) :: old_back
-
-      old_back = this%back_
-
-      return
-   end subroutine __MANGLE(pop_back)
-
-
-   !subroutine __MANGLE(resize_default)(this, count, unused, value, rc)
+   !subroutine __MANGLE(pop_back)(this)
    !   class(__deque), intent(inout) :: this
-   !   integer, intent(in) :: count
-   !   type (KeywordEnforcer), optional, intent(in) :: unused
-   !   __T_declare_dummy__, optional, intent(in) :: value
-   !   integer, optional, intent(out) :: rc
 
-   !   __UNUSED_DUMMY(unused)
+   !   integer(kind=GFTL_SIZE_KIND) :: old_back
 
-   !   !call this%resize(int(count,kind=GFTL_SIZE_KIND), value=value, rc=rc)
+   !   old_back = this%back_
 
-   !end subroutine __MANGLE(resize_default)
+   !   return
+   !end subroutine __MANGLE(pop_back)
 
 
-   ! =======================
-   !  downsize()
-   ! =======================
-   !subroutine __MANGLE(downsize)(this, from, to)
-   !   class(__deque), intent(inout) :: this
-   !   integer(kind=GFTL_SIZE_KIND), intent(in) :: from, to  ! assumes newsize<=size()
 
-   !end subroutine __MANGLE(downsize)
-
-
-   ! =======================
-   !  clear
-   ! =======================
    subroutine __MANGLE(clear)(this)
       class(__deque), intent(inout) :: this
 
@@ -241,10 +175,10 @@
    !  shrink_to_fit
    ! =======================
 
-   subroutine __MANGLE(shrink_to_fit)(this)
-      class(__deque), intent(inout) :: this
+   !subroutine __MANGLE(shrink_to_fit)(this)
+   !   class(__deque), intent(inout) :: this
 
-   end subroutine __MANGLE(shrink_to_fit)
+   !end subroutine __MANGLE(shrink_to_fit)
 
 
    ! =======================
@@ -293,31 +227,31 @@
    ! =======================
    !  swap
    ! =======================
-   subroutine __MANGLE(swap)(this, x)
-      class(__deque), target, intent(inout) :: this
-      type(__deque), target, intent(inout) :: x
+   !subroutine __MANGLE(swap)(this, x)
+   !   class(__deque), target, intent(inout) :: this
+   !   type(__deque), target, intent(inout) :: x
 
-      type(__MANGLE(bucket_ptr)), dimension(:), allocatable :: tmp
-      integer(kind=GFTL_SIZE_KIND) :: i_tmp
+   !   type(__MANGLE(bucket_ptr)), dimension(:), allocatable :: tmp
+   !   integer(kind=GFTL_SIZE_KIND) :: i_tmp
 
-      call move_alloc(this%buckets, tmp)
-      call move_alloc(x%buckets, this%buckets)
-      call move_alloc(tmp, x%buckets)
+   !   call move_alloc(this%buckets, tmp)
+   !   call move_alloc(x%buckets, this%buckets)
+   !   call move_alloc(tmp, x%buckets)
 
-      i_tmp = this%size_
-      this%size_ = x%size_
-      x%size_ = i_tmp
+   !   i_tmp = this%size_
+   !   this%size_ = x%size_
+   !   x%size_ = i_tmp
 
-      i_tmp = this%front_
-      this%front_ = x%front_
-      x%front_ = i_tmp
+   !   i_tmp = this%front_
+   !   this%front_ = x%front_
+   !   x%front_ = i_tmp
 
-      i_tmp = this%back_
-      this%back_ = x%back_
-      x%back_ = i_tmp
-      
-      return
-   end subroutine __MANGLE(swap)
+   !   i_tmp = this%back_
+   !   this%back_ = x%back_
+   !   x%back_ = i_tmp
+   !   
+   !   return
+   !end subroutine __MANGLE(swap)
 
 
 #ifdef __T_EQ__
@@ -339,14 +273,14 @@
    ! =======================
    !  begin() - create an iterator
    ! =======================
-   function __MANGLE(begin)(this) result(iter)
-      type (__deque_iterator__) :: iter
-      class (__deque), target, intent(in) :: this
+   !function __MANGLE(begin)(this) result(iter)
+   !   type (__deque_iterator__) :: iter
+   !   class (__deque), target, intent(in) :: this
 
-      iter%current_index = 1
-      iter%deque => this
-      
-   end function __MANGLE(begin)
+   !   iter%current_index = 1
+   !   iter%deque => this
+   !   
+   !end function __MANGLE(begin)
 
 
    ! =======================
@@ -354,27 +288,27 @@
    !  Construct  forward iterator, initially set to just
    !  after last element of deque.
    ! =======================
-   function __MANGLE(end)(this) result(iter)
-      class (__deque), target, intent(in) :: this
-      type (__deque_iterator__) :: iter
+   !function __MANGLE(end)(this) result(iter)
+   !   class (__deque), target, intent(in) :: this
+   !   type (__deque_iterator__) :: iter
 
-      !iter%current_index = this%size() + 1 ! past the end
-      !iter%deque => this
+   !   !iter%current_index = this%size() + 1 ! past the end
+   !   !iter%deque => this
 
-   end function __MANGLE(end)
+   !end function __MANGLE(end)
 
 
    ! =======================
    !  rbegin() - create a reverse iterator
    ! =======================
-   function __MANGLE(rbegin)(this) result(iter)
-      type (__deque_riterator__) :: iter
-      class (__deque), target, intent(in) :: this
+   !function __MANGLE(rbegin)(this) result(iter)
+   !   type (__deque_riterator__) :: iter
+   !   class (__deque), target, intent(in) :: this
 
-      iter%current_index = this%size_
-      iter%deque => this
+   !   iter%current_index = this%size_
+   !   iter%deque => this
 
-   end function __MANGLE(rbegin)
+   !end function __MANGLE(rbegin)
 
 
    ! =======================
@@ -382,14 +316,14 @@
    !  Construct  reverse iterator, initially set to just
    !  before first element of deque
    ! =======================
-   function __MANGLE(rend)(this) result(iter)
-      class (__deque), target, intent(in) :: this
-      type (__deque_riterator__) :: iter
+   !function __MANGLE(rend)(this) result(iter)
+   !   class (__deque), target, intent(in) :: this
+   !   type (__deque_riterator__) :: iter
 
-      iter%current_index = 0 ! before beginning
-      iter%deque => this
+   !   iter%current_index = 0 ! before beginning
+   !   iter%deque => this
 
-   end function __MANGLE(rend)
+   !end function __MANGLE(rend)
 
 
    subroutine __MANGLE(write_formatted)(this, unit, iotype, v_list, iostat, iomsg)
