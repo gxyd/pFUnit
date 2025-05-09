@@ -34,15 +34,7 @@
    
    ! Structure constructors
    interface __deque
-      !module procedure __MANGLE(new_deque_empty)
-#ifndef  __gftl_disable_index_kind_overload
-      !module procedure __MANGLE(new_deque_fill_size_kind)
-#endif
-      !module procedure __MANGLE(new_deque_fill_default)
       module procedure __MANGLE(new_deque_range)
-      !module procedure __MANGLE(new_deque_copy)
-!!$      module procedure __MANGLE(new_deque_move)
-
    end interface __deque
 
    ! Internal wrapper type allows support for types that cannot be
@@ -69,36 +61,26 @@
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
 
-      procedure :: empty => __MANGLE(empty)
-
       ! Accessors
-      procedure :: at_default => __MANGLE(at_default)
-      procedure :: of_default => __MANGLE(of_default)
-      generic :: at => at_default
-      generic :: at => of_default
-      generic :: of => of_default
+      !procedure :: at_default => __MANGLE(at_default)
+      !procedure :: of_default => __MANGLE(of_default)
+      !generic :: at => at_default
+      !generic :: at => of_default
+      !generic :: of => of_default
 
 #ifndef  __gftl_disable_index_kind_overload
 #endif
-
-      procedure :: back => __MANGLE(back)
-      procedure :: front => __MANGLE(front)
 
       procedure :: push_back => __MANGLE(push_back)
       procedure :: pop_back => __MANGLE(pop_back)
 
-      ! deques are not vectors ...
-      procedure :: push_front => __MANGLE(push_front)
-      procedure :: pop_front => __MANGLE(pop_front)
-
-      procedure :: resize_size_kind => __MANGLE(resize_size_kind)
-      procedure :: resize_default => __MANGLE(resize_default)
-      generic :: resize => resize_default
+      !procedure :: resize_default => __MANGLE(resize_default)
+      !generic :: resize => resize_default
 #ifndef  __gftl_disable_index_kind_overload
-      generic :: resize => resize_size_kind
+      !generic :: resize => resize_size_kind
 #endif
 
-      procedure :: clear => __MANGLE(clear)
+      !procedure :: clear => __MANGLE(clear)
       procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
 
       procedure :: erase_one => __MANGLE(erase_one)
@@ -108,13 +90,6 @@
 
       procedure :: swap => __MANGLE(swap)
       procedure :: reset => __MANGLE(reset)
-
-      procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
-      procedure :: reserve_default => __MANGLE(reserve_default)
-      generic :: reserve => reserve_default
-#ifndef  __gftl_disable_index_kind_overload
-      generic :: reserve => reserve_size_kind
-#endif
 
 
       ! Factory methods for iterators
@@ -134,7 +109,7 @@
       ! private helper procedures
       procedure, private :: set_capacity => __MANGLE(set_capacity)
       procedure, private :: grow_to => __MANGLE(grow_to)
-      procedure, private :: downsize=>__MANGLE(downsize)
+      !procedure, private :: downsize=>__MANGLE(downsize)
       !procedure, private :: idx => __MANGLE(idx)
       procedure, private :: bucket_index => __MANGLE(bucket_index)
       procedure, private :: bucket_offset => __MANGLE(bucket_offset)

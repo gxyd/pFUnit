@@ -59,8 +59,6 @@
       class(__stack), intent(in) :: this
       integer(kind=GFTL_SIZE_KIND) :: res
 
-      !res = this%container%size()
-
       return
    end function __MANGLE(size)
 
@@ -72,7 +70,6 @@
    pure logical function __MANGLE(empty)(this) result(empty)
       class(__stack), intent(in) :: this
 
-      empty = this%container%empty()
 
    end function __MANGLE(empty)
 
@@ -83,8 +80,6 @@
    function __MANGLE(top)(this) result(res)
       class(__stack), target, intent(in) :: this
       __T_declare_result__, pointer :: res
-
-      res => this%container%back()
 
       return
    end function __MANGLE(top)
@@ -127,10 +122,6 @@
       logical :: equal
       type(__stack), intent(in) :: lhs
       type(__stack), intent(in) :: rhs
-
-
-      !equal = (lhs%container == rhs%container)
-
       return
    end function __MANGLE(equal)
 
@@ -141,9 +132,6 @@
       logical :: not_equal
       type(__stack), intent(in) :: lhs
       type(__stack), intent(in) :: rhs
-
-      !not_equal = .not. (lhs == rhs)
-
       return
    end function __MANGLE(not_equal)
 

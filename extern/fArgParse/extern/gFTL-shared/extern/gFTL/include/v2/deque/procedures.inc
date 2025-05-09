@@ -39,13 +39,13 @@
 #include "parameters/T/define_derived_macros.inc"
 
 
-   subroutine __MANGLE(unused_procedure)()
-      ! The following are an adhoc way to suppress compiler
-      ! warnings about parameters not used in this template
-      __UNUSED_DUMMY(BAD_ALLOC)
-      __UNUSED_DUMMY(TYPE_HAS_NO_DEFAULT_VALUE)
-      __UNUSED_DUMMY(NO_TYPE__)
-   end subroutine __MANGLE(unused_procedure)
+   !subroutine __MANGLE(unused_procedure)()
+   !   ! The following are an adhoc way to suppress compiler
+   !   ! warnings about parameters not used in this template
+   !   __UNUSED_DUMMY(BAD_ALLOC)
+   !   __UNUSED_DUMMY(TYPE_HAS_NO_DEFAULT_VALUE)
+   !   __UNUSED_DUMMY(NO_TYPE__)
+   !end subroutine __MANGLE(unused_procedure)
 
 
    function __MANGLE(new_deque_range)(first, last) result(v)
@@ -63,36 +63,28 @@
       return
    end function __MANGLE(new_deque_range)
 
-   pure logical function __MANGLE(empty)(this) result(empty)
-      class(__deque), intent(in) :: this
 
-      empty = (this%size_==0)
+   !function __MANGLE(at_default)(this, i, rc) result(res)
+   !   class(__deque), target, intent(in) :: this
+   !   integer, intent(in) :: i
+   !   __T_declare_result__, pointer :: res
+   !   integer, intent(out) :: rc
 
-   end function __MANGLE(empty)
+   !   !res => this%at(int(i,GFTL_SIZE_KIND),rc)
 
-
-
-   function __MANGLE(at_default)(this, i, rc) result(res)
-      class(__deque), target, intent(in) :: this
-      integer, intent(in) :: i
-      __T_declare_result__, pointer :: res
-      integer, intent(out) :: rc
-
-      !res => this%at(int(i,GFTL_SIZE_KIND),rc)
-
-      return
-   end function __MANGLE(at_default)
+   !   return
+   !end function __MANGLE(at_default)
 
 
-   function __MANGLE(of_default)(this, i) result(res)
-      class(__deque), target, intent(in) :: this
-      integer, intent(in) :: i
-      __T_declare_result__, pointer :: res
+   !function __MANGLE(of_default)(this, i) result(res)
+   !   class(__deque), target, intent(in) :: this
+   !   integer, intent(in) :: i
+   !   __T_declare_result__, pointer :: res
 
-      !res => this%at(int(i,GFTL_SIZE_KIND))
+   !   !res => this%at(int(i,GFTL_SIZE_KIND))
 
-      return
-   end function __MANGLE(of_default)
+   !   return
+   !end function __MANGLE(of_default)
 
 
    function __MANGLE(back)(this) result(res)
@@ -105,26 +97,25 @@
    end function __MANGLE(back)
 
 
-   function __MANGLE(front)(this) result(res)
-      class(__deque), target, intent(in) :: this
-      __T_declare_result__, pointer :: res
+   !function __MANGLE(front)(this) result(res)
+   !   class(__deque), target, intent(in) :: this
+   !   __T_declare_result__, pointer :: res
 
-      res => this%buckets(this%front_)%ptr%bucket_items%item
+   !   res => this%buckets(this%front_)%ptr%bucket_items%item
 
-      return
-   end function __MANGLE(front)
+   !   return
+   !end function __MANGLE(front)
 
    subroutine __MANGLE(reset)(this)
       class(__deque), intent(inout) :: this
 
-      call this%clear()
-      if (allocated(this%buckets)) then
-         deallocate(this%buckets)
-      end if
-      this%front_ = -1
-      this%back_ = 0
+      !if (allocated(this%buckets)) then
+      !   deallocate(this%buckets)
+      !end if
+      !this%front_ = -1
+      !this%back_ = 0
 
-      return
+      !return
    end subroutine __MANGLE(reset)
 
 
@@ -209,66 +200,28 @@
    end subroutine __MANGLE(pop_back)
 
 
-   ! =======================
-   !  push_front()
-   ! =======================
-   subroutine __MANGLE(push_front)(this, value, unused, rc)
-      class(__deque), intent(inout) :: this
-      __T_declare_dummy__, intent(in) :: value
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      integer, optional, intent(out) :: rc
+   !subroutine __MANGLE(resize_default)(this, count, unused, value, rc)
+   !   class(__deque), intent(inout) :: this
+   !   integer, intent(in) :: count
+   !   type (KeywordEnforcer), optional, intent(in) :: unused
+   !   __T_declare_dummy__, optional, intent(in) :: value
+   !   integer, optional, intent(out) :: rc
 
-   end subroutine __MANGLE(push_front)
+   !   __UNUSED_DUMMY(unused)
 
+   !   !call this%resize(int(count,kind=GFTL_SIZE_KIND), value=value, rc=rc)
 
-   ! =======================
-   !  pop_front()
-   ! =======================
-   subroutine __MANGLE(pop_front)(this)
-      class(__deque), intent(inout) :: this
-
-      integer(kind=GFTL_SIZE_KIND) :: old_front
-      
-   end subroutine __MANGLE(pop_front)
-
-
-
-   ! =======================
-   !  resize()
-   ! =======================
-   subroutine __MANGLE(resize_size_kind)(this, count, unused, value, rc)
-      class(__deque), intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: count
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      __T_declare_dummy__, optional, intent(in) :: value
-      integer, optional, intent(out) :: rc
-
-      integer(kind=GFTL_SIZE_KIND) :: old_size
-      integer :: status
-   end subroutine __MANGLE(resize_size_kind)
-
-   subroutine __MANGLE(resize_default)(this, count, unused, value, rc)
-      class(__deque), intent(inout) :: this
-      integer, intent(in) :: count
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      __T_declare_dummy__, optional, intent(in) :: value
-      integer, optional, intent(out) :: rc
-
-      __UNUSED_DUMMY(unused)
-
-      call this%resize(int(count,kind=GFTL_SIZE_KIND), value=value, rc=rc)
-
-   end subroutine __MANGLE(resize_default)
+   !end subroutine __MANGLE(resize_default)
 
 
    ! =======================
    !  downsize()
    ! =======================
-   subroutine __MANGLE(downsize)(this, from, to)
-      class(__deque), intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: from, to  ! assumes newsize<=size()
+   !subroutine __MANGLE(downsize)(this, from, to)
+   !   class(__deque), intent(inout) :: this
+   !   integer(kind=GFTL_SIZE_KIND), intent(in) :: from, to  ! assumes newsize<=size()
 
-   end subroutine __MANGLE(downsize)
+   !end subroutine __MANGLE(downsize)
 
 
    ! =======================
@@ -277,7 +230,6 @@
    subroutine __MANGLE(clear)(this)
       class(__deque), intent(inout) :: this
 
-      call this%downsize(this%front_, this%back_)
       this%front_ = -1
       this%back_ = 0
 
@@ -320,33 +272,6 @@
 
    end function __MANGLE(erase_range)
 
-   ! =======================
-   !  reserve()
-   ! =======================
-   subroutine __MANGLE(reserve_size_kind)(this, capacity, unused, rc)
-      class(__deque), intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: capacity
-      class(KeywordEnforcer), optional, intent(in) :: unused
-      integer, optional, intent(out) :: rc
-
-      __UNUSED_DUMMY(unused)
-
-   end subroutine __MANGLE(reserve_size_kind)
-
-   subroutine __MANGLE(reserve_default)(this, capacity, unused, rc)
-      class(__deque), intent(inout) :: this
-      integer, intent(in) :: capacity
-      class(KeywordEnforcer), optional, intent(in) :: unused
-      integer, optional, intent(out) :: rc
-
-      __UNUSED_DUMMY(unused)
-
-   end subroutine __MANGLE(reserve_default)
-
-
-   ! =======================
-   !  set_capacity()
-   ! =======================
    subroutine __MANGLE(set_capacity)(this, capacity)
       class(__deque), target, intent(inout) :: this
       integer(kind=GFTL_SIZE_KIND), intent(in) :: capacity  ! capacity must be >=0
