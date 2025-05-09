@@ -59,7 +59,7 @@
       class(__stack), intent(in) :: this
       integer(kind=GFTL_SIZE_KIND) :: res
 
-      res = this%container%size()
+      !res = this%container%size()
 
       return
    end function __MANGLE(size)
@@ -129,7 +129,7 @@
       type(__stack), intent(in) :: rhs
 
 
-      equal = (lhs%container == rhs%container)
+      !equal = (lhs%container == rhs%container)
 
       return
    end function __MANGLE(equal)
@@ -142,7 +142,7 @@
       type(__stack), intent(in) :: lhs
       type(__stack), intent(in) :: rhs
 
-      not_equal = .not. (lhs == rhs)
+      !not_equal = .not. (lhs == rhs)
 
       return
    end function __MANGLE(not_equal)

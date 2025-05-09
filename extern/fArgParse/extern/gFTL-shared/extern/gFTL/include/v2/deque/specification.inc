@@ -53,13 +53,6 @@
       __T_declare_component__ :: item
    end type __MANGLE(Wrapper)
 
-   ! "T_rank"   T_rank __T_rank __T_rank__
-   ! "T_shape"  T_shape __T_shape __T_shape__
-   ! "component" __T_declare_component__
-   ! "dimension" __T_dimension_component__
-   ! "default" __T_default__
-
-   ! Note: Bucket size is not yet implemented.
    type :: __MANGLE(bucket)
       type(__MANGLE(wrapper)) :: bucket_items
    end type __MANGLE(bucket)
@@ -76,9 +69,6 @@
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
 
-      !procedure :: size => __MANGLE(size)
-      !procedure, nopass :: max_size => __MANGLE(max_size)
-      !procedure :: capacity => __MANGLE(capacity)
       procedure :: empty => __MANGLE(empty)
 
       ! Accessors
@@ -86,26 +76,13 @@
       procedure :: of_default => __MANGLE(of_default)
       generic :: at => at_default
       generic :: at => of_default
-      ! Legacy interface from V1 - may be deleted in V3
       generic :: of => of_default
 
 #ifndef  __gftl_disable_index_kind_overload
-      !procedure :: at_size_kind => __MANGLE(at_size_kind)
-      !procedure :: of_size_kind => __MANGLE(of_size_kind)
-      !generic :: at => at_size_kind
-      !generic :: at => of_size_kind
-      !generic :: of => of_size_kind
 #endif
 
       procedure :: back => __MANGLE(back)
       procedure :: front => __MANGLE(front)
-
-      !procedure :: set_size_kind => __MANGLE(set_size_kind)
-      !procedure :: set_default => __MANGLE(set_default)
-      !generic :: set => set_default
-#ifndef  __gftl_disable_index_kind_overload
-      !generic :: set => set_size_kind
-#endif
 
       procedure :: push_back => __MANGLE(push_back)
       procedure :: pop_back => __MANGLE(pop_back)
@@ -171,7 +148,6 @@
 
 #if defined(__T_EQ__) || defined(__T_LT__)
    interface operator(==)
-      !module procedure __MANGLE(equal)
    end interface operator(==)
    interface operator(/=)
       !module procedure __MANGLE(not_equal)
