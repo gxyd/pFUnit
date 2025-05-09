@@ -34,13 +34,13 @@
    
    ! Structure constructors
    interface __deque
-      module procedure __MANGLE(new_deque_empty)
+      !module procedure __MANGLE(new_deque_empty)
 #ifndef  __gftl_disable_index_kind_overload
-      module procedure __MANGLE(new_deque_fill_size_kind)
+      !module procedure __MANGLE(new_deque_fill_size_kind)
 #endif
-      module procedure __MANGLE(new_deque_fill_default)
+      !module procedure __MANGLE(new_deque_fill_default)
       module procedure __MANGLE(new_deque_range)
-      module procedure __MANGLE(new_deque_copy)
+      !module procedure __MANGLE(new_deque_copy)
 !!$      module procedure __MANGLE(new_deque_move)
 
    end interface __deque
@@ -76,9 +76,9 @@
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
 
-      procedure :: size => __MANGLE(size)
-      procedure, nopass :: max_size => __MANGLE(max_size)
-      procedure :: capacity => __MANGLE(capacity)
+      !procedure :: size => __MANGLE(size)
+      !procedure, nopass :: max_size => __MANGLE(max_size)
+      !procedure :: capacity => __MANGLE(capacity)
       procedure :: empty => __MANGLE(empty)
 
       ! Accessors
@@ -90,21 +90,21 @@
       generic :: of => of_default
 
 #ifndef  __gftl_disable_index_kind_overload
-      procedure :: at_size_kind => __MANGLE(at_size_kind)
-      procedure :: of_size_kind => __MANGLE(of_size_kind)
-      generic :: at => at_size_kind
-      generic :: at => of_size_kind
-      generic :: of => of_size_kind
+      !procedure :: at_size_kind => __MANGLE(at_size_kind)
+      !procedure :: of_size_kind => __MANGLE(of_size_kind)
+      !generic :: at => at_size_kind
+      !generic :: at => of_size_kind
+      !generic :: of => of_size_kind
 #endif
 
       procedure :: back => __MANGLE(back)
       procedure :: front => __MANGLE(front)
 
-      procedure :: set_size_kind => __MANGLE(set_size_kind)
-      procedure :: set_default => __MANGLE(set_default)
-      generic :: set => set_default
+      !procedure :: set_size_kind => __MANGLE(set_size_kind)
+      !procedure :: set_default => __MANGLE(set_default)
+      !generic :: set => set_default
 #ifndef  __gftl_disable_index_kind_overload
-      generic :: set => set_size_kind
+      !generic :: set => set_size_kind
 #endif
 
       procedure :: push_back => __MANGLE(push_back)
@@ -158,7 +158,7 @@
       procedure, private :: set_capacity => __MANGLE(set_capacity)
       procedure, private :: grow_to => __MANGLE(grow_to)
       procedure, private :: downsize=>__MANGLE(downsize)
-      procedure, private :: idx => __MANGLE(idx)
+      !procedure, private :: idx => __MANGLE(idx)
       procedure, private :: bucket_index => __MANGLE(bucket_index)
       procedure, private :: bucket_offset => __MANGLE(bucket_offset)
    end type __deque
@@ -171,10 +171,10 @@
 
 #if defined(__T_EQ__) || defined(__T_LT__)
    interface operator(==)
-      module procedure __MANGLE(equal)
+      !module procedure __MANGLE(equal)
    end interface operator(==)
    interface operator(/=)
-      module procedure __MANGLE(not_equal)
+      !module procedure __MANGLE(not_equal)
    end interface operator(/=)
 
 #endif

@@ -26,7 +26,7 @@
          __T_declare_result__, pointer :: ptr
          class (__deque_iterator__), intent(in) :: this
 
-         ptr => this%deque%at(this%current_index)
+         !ptr => this%deque%at(this%current_index)
 
       end function __MANGLE(iter_of)
 
@@ -36,7 +36,7 @@
          class (__deque_iterator__), intent(in) :: this
          integer(kind=__gftl_size_kind), intent(in) :: i
 
-         ptr => this%deque%at(this%current_index + i)
+         !ptr => this%deque%at(this%current_index + i)
 
       end function __MANGLE(iter_of_offset_size_kind)
 
@@ -45,7 +45,7 @@
          class (__deque_iterator__), intent(in) :: this
          integer, intent(in) :: i
 
-         ptr => this%deque%of(this%current_index + i)
+         !ptr => this%deque%of(this%current_index + i)
 
       end function __MANGLE(iter_of_offset_default)
 
