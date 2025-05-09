@@ -47,19 +47,17 @@
       type (__deque_iterator__) :: iter
 
       iter = first
-      do while (iter /= last)
-         !call v%push_back(iter%of())
-      end do
+      print *, iter /= last
 
       return
    end function __MANGLE(new_deque_range)
 
 
-      subroutine __MANGLE(iter_next)(this)
-         class (__deque_iterator__), intent(inout) :: this
+      !subroutine __MANGLE(iter_next)(this)
+      !   class (__deque_iterator__), intent(inout) :: this
 
-         this%current_index = this%current_index + 1
-      end subroutine __MANGLE(iter_next)
+      !   this%current_index = this%current_index + 1
+      !end subroutine __MANGLE(iter_next)
 
 
       subroutine __MANGLE(iter_prev)(this)
