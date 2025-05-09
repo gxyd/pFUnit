@@ -70,7 +70,6 @@
       end function __MANGLE(iter_not_equal)
 
 
-!#include "deque/reverse_iterator_procedures.inc"
       subroutine __MANGLE(riter_next)(this)
          class (__deque_riterator__), intent(inout) :: this
 
