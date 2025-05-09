@@ -66,17 +66,6 @@
 
 #endif
 
-!#ifdef __T_LT__
-!   interface operator(<)
-!   end interface
-!   interface operator(>)
-!   end interface
-!   interface operator(<=)
-!   end interface
-!   interface operator(>=)
-!   end interface
-!#endif
-      
 
 #include "deque/iterator_specification.inc"
 #include "deque/reverse_iterator_specification.inc"
