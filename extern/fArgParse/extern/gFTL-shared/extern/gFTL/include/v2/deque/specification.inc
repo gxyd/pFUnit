@@ -37,10 +37,6 @@
       module procedure __MANGLE(new_deque_range)
    end interface __deque
 
-   ! Internal wrapper type allows support for types that cannot be
-   ! directly treated as arrays: arrays, deferred type, deferred
-   ! length.  To reduce implementation complexity the wrapper is used
-   ! even when technically not required.  
    type :: __MANGLE(wrapper)
       __T_declare_component__ :: item
    end type __MANGLE(Wrapper)
@@ -60,42 +56,7 @@
       integer(kind=GFTL_SIZE_KIND) :: front_ = -1
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
-
-      procedure :: erase_one => __MANGLE(erase_one)
-      procedure :: erase_range => __MANGLE(erase_range)
-      generic :: erase => erase_one
-      generic :: erase => erase_range
-
-      !procedure :: swap => __MANGLE(swap)
-      !procedure :: reset => __MANGLE(reset)
-
-
-      ! Factory methods for iterators
-      !procedure :: begin => __MANGLE(begin)
-      !procedure :: end => __MANGLE(end)
-      !procedure :: rbegin => __MANGLE(rbegin)
-      !procedure :: rend => __MANGLE(rend)
-
-      ! No analog for the following in STL, but it seems very convenient.
-#ifdef __T_EQ__
-      procedure :: get_index => __MANGLE(get_index)
-#endif
-      ! I/O
-      procedure :: write_formatted => __MANGLE(write_formatted)
-      generic :: write(formatted) => write_formatted
-
-      ! private helper procedures
-      procedure, private :: set_capacity => __MANGLE(set_capacity)
-      procedure, private :: grow_to => __MANGLE(grow_to)
-      procedure, private :: bucket_index => __MANGLE(bucket_index)
-      procedure, private :: bucket_offset => __MANGLE(bucket_offset)
    end type __deque
-
-
-   !interface swap
-   !   module procedure __MANGLE(swap)
-   !end interface swap
-
 
 #if defined(__T_EQ__) || defined(__T_LT__)
    interface operator(==)
@@ -105,20 +66,16 @@
 
 #endif
 
-#ifdef __T_LT__
-   interface operator(<)
-      module procedure __MANGLE(less_than)
-   end interface
-   interface operator(>)
-      module procedure __MANGLE(greater_than)
-   end interface
-   interface operator(<=)
-      module procedure __MANGLE(less_than_or_equal_to)
-   end interface
-   interface operator(>=)
-      module procedure __MANGLE(greater_than_or_equal_to)
-   end interface
-#endif
+!#ifdef __T_LT__
+!   interface operator(<)
+!   end interface
+!   interface operator(>)
+!   end interface
+!   interface operator(<=)
+!   end interface
+!   interface operator(>=)
+!   end interface
+!#endif
       
 
 #include "deque/iterator_specification.inc"

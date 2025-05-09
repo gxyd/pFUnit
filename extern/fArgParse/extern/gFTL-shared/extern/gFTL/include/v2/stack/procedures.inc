@@ -149,7 +149,7 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      less_than = (lhs%container < rhs%container)
+      !less_than = (lhs%container < rhs%container)
 
       return
    end function __MANGLE(less_than)
@@ -160,7 +160,7 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      greater_than_or_equal_to = .not. (lhs < rhs)
+      !greater_than_or_equal_to = .not. (lhs < rhs)
 
       return
    end function __MANGLE(greater_than_or_equal_to)
@@ -171,7 +171,7 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      greater_than = (rhs < lhs)
+      !greater_than = (rhs < lhs)
 
       return
    end function __MANGLE(greater_than)
@@ -183,7 +183,7 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      less_than_or_equal_to = .not. (rhs < lhs)
+      !less_than_or_equal_to = .not. (rhs < lhs)
 
       return
    end function __MANGLE(less_than_or_equal_to)
