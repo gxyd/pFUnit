@@ -6,8 +6,6 @@
    ! Iterator functions
    public :: advance
    public :: distance
-   !public :: next
-   !public :: prev
    public :: operator(+)
    public :: operator(-)
 

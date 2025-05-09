@@ -51,7 +51,7 @@
 
    type :: __deque
       private
-      type(__MANGLE(bucket_ptr)), allocatable :: buckets(:)
+      !type(__MANGLE(bucket_ptr)), allocatable :: buckets(:)
       integer(kind=GFTL_SIZE_KIND) :: size_ = 0
       integer(kind=GFTL_SIZE_KIND) :: front_ = -1
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0

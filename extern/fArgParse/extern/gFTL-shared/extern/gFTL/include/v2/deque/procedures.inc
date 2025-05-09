@@ -72,69 +72,6 @@
       end function __MANGLE(iter_not_equal)
 
 
-      !function __MANGLE(iter_next_1)(it) result(new_it)
-      !   type(__deque_iterator__) :: new_it
-      !   type(__deque_iterator__), intent(in) :: it
-
-      !   !new_it = next(it,1)
-
-      !   return
-      !end function __MANGLE(iter_next_1)
-
-      !function __MANGLE(iter_next_n_size_kind)(it, n) result(new_it)
-      !   type(__deque_iterator__) :: new_it
-      !   type(__deque_iterator__), intent(in) :: it
-      !   integer(kind=__gftl_size_kind), intent(in) :: n
-
-      !   !new_it = it
-      !   !call new_it%add(n)
-
-      !   return
-      !end function __MANGLE(iter_next_n_size_kind)
-
-      !function __MANGLE(iter_next_n_default)(it, n) result(new_it)
-      !   type(__deque_iterator__) :: new_it
-      !   type(__deque_iterator__), intent(in) :: it
-      !   integer, intent(in) :: n
-
-      !   !new_it = it
-      !   !call new_it%add(n)
-
-      !   return
-      !end function __MANGLE(iter_next_n_default)
-
-      !function __MANGLE(iter_prev_1)(it) result(new_it)
-      !   type(__deque_iterator__) :: new_it
-      !   type(__deque_iterator__), intent(in) :: it
-
-      !   !new_it = prev(it,1)
-
-      !   return
-      !end function __MANGLE(iter_prev_1)
-
-      !function __MANGLE(iter_prev_n_size_kind)(it, n) result(new_it)
-      !   type(__deque_iterator__) :: new_it
-      !   type(__deque_iterator__), intent(in) :: it
-      !   integer(kind=__gftl_size_kind), intent(in) :: n
-
-      !   !new_it = it
-      !   !call new_it%sub(n)
-
-      !   return
-      !end function __MANGLE(iter_prev_n_size_kind)
-
-      !function __MANGLE(iter_prev_n_default)(it, n) result(new_it)
-      !   type(__deque_iterator__) :: new_it
-      !   type(__deque_iterator__), intent(in) :: it
-      !   integer, intent(in) :: n
-
-      !   !new_it = it
-      !   !call new_it%sub(n)
-
-      !   return
-      !end function __MANGLE(iter_prev_n_default)
-
-
 #include "deque/reverse_iterator_procedures.inc"
 
 #if defined(__deque_iterator__)
