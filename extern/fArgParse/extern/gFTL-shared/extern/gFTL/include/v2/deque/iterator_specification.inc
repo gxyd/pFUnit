@@ -15,28 +15,15 @@
 
    contains
 
-      procedure :: prev => __MANGLE(iter_prev)
-      !procedure :: next => __MANGLE(iter_next)
+      !procedure :: prev => __MANGLE(iter_prev)
 
-!!$      procedure :: back_inserter => __MANGLE(back_inserter)
-!!$      procedure :: front_inserter => __MANGLE(front_inserter)
-!!$      procedure :: inserter => __MANGLE(inserter)
-!!$      procedure :: make_move_iterator => __MANGLE(make_move_iterator)
-
-!!$      procedure :: insert_size_kind => __MANGLE(insert_size_kind)
-!!$      procedure :: insert_default => __MANGLE(insert_default)
-!!$      generic :: insert => insert_default
-!!$#ifndef  __gftl_disable_index_kind_overload
-!!$      generic :: insert => insert_size_kind
-!!$#endif
-
-      procedure :: __MANGLE(iter_of)
-      procedure :: __MANGLE(iter_of_offset_size_kind)
-      procedure :: __MANGLE(iter_of_offset_default)
-      generic :: of => __MANGLE(iter_of)
-      generic :: of => __MANGLE(iter_of_offset_default)
+      !procedure :: __MANGLE(iter_of)
+      !procedure :: __MANGLE(iter_of_offset_size_kind)
+      !procedure :: __MANGLE(iter_of_offset_default)
+      !generic :: of => __MANGLE(iter_of)
+      !generic :: of => __MANGLE(iter_of_offset_default)
 #ifndef  __gftl_disable_index_kind_overload
-      generic :: of => __MANGLE(iter_of_offset_size_kind)
+      !generic :: of => __MANGLE(iter_of_offset_size_kind)
 #endif
 
       ! Anolog of STL "+=" and "-=" operators

@@ -60,40 +60,40 @@
       !end subroutine __MANGLE(iter_next)
 
 
-      subroutine __MANGLE(iter_prev)(this)
-         class (__deque_iterator__), intent(inout) :: this
+      !subroutine __MANGLE(iter_prev)(this)
+      !   class (__deque_iterator__), intent(inout) :: this
 
-         this%current_index = this%current_index - 1
+      !   this%current_index = this%current_index - 1
 
-      end subroutine __MANGLE(iter_prev)
-
-
-      function __MANGLE(iter_of)(this) result(ptr)
-         __T_declare_result__, pointer :: ptr
-         class (__deque_iterator__), intent(in) :: this
-
-         !ptr => this%deque%at(this%current_index)
-
-      end function __MANGLE(iter_of)
+      !end subroutine __MANGLE(iter_prev)
 
 
-      function __MANGLE(iter_of_offset_size_kind)(this, i) result(ptr)
-         __T_declare_result__, pointer :: ptr
-         class (__deque_iterator__), intent(in) :: this
-         integer(kind=__gftl_size_kind), intent(in) :: i
+      !function __MANGLE(iter_of)(this) result(ptr)
+      !   __T_declare_result__, pointer :: ptr
+      !   class (__deque_iterator__), intent(in) :: this
 
-         !ptr => this%deque%at(this%current_index + i)
+      !   !ptr => this%deque%at(this%current_index)
 
-      end function __MANGLE(iter_of_offset_size_kind)
+      !end function __MANGLE(iter_of)
 
-      function __MANGLE(iter_of_offset_default)(this, i) result(ptr)
-         __T_declare_result__, pointer :: ptr
-         class (__deque_iterator__), intent(in) :: this
-         integer, intent(in) :: i
 
-         !ptr => this%deque%of(this%current_index + i)
+      !function __MANGLE(iter_of_offset_size_kind)(this, i) result(ptr)
+      !   __T_declare_result__, pointer :: ptr
+      !   class (__deque_iterator__), intent(in) :: this
+      !   integer(kind=__gftl_size_kind), intent(in) :: i
 
-      end function __MANGLE(iter_of_offset_default)
+      !   !ptr => this%deque%at(this%current_index + i)
+
+      !end function __MANGLE(iter_of_offset_size_kind)
+
+      !function __MANGLE(iter_of_offset_default)(this, i) result(ptr)
+      !   __T_declare_result__, pointer :: ptr
+      !   class (__deque_iterator__), intent(in) :: this
+      !   integer, intent(in) :: i
+
+      !   !ptr => this%deque%of(this%current_index + i)
+
+      !end function __MANGLE(iter_of_offset_default)
 
 
       subroutine __MANGLE(iter_add_n_size_kind)(this, n)
