@@ -3,16 +3,11 @@
    public :: __deque_iterator
    public :: __deque_riterator
 
-   ! Non type-bound procedures
-   !public :: swap
-
    ! Iterator functions
    public :: advance
-   public :: begin
    public :: distance
-   public :: end
-   public :: next
-   public :: prev
+   !public :: next
+   !public :: prev
    public :: operator(+)
    public :: operator(-)
 
