@@ -108,19 +108,15 @@
       procedure :: clear => __MANGLE(clear)
       procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
 
-      procedure :: erase_one => __MANGLE(erase_one)
-      procedure :: erase_range => __MANGLE(erase_range)
-      generic :: erase => erase_one
-      generic :: erase => erase_range
 
       procedure :: swap => __MANGLE(swap)
 
-      procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
-      procedure :: reserve_default => __MANGLE(reserve_default)
-      generic :: reserve => reserve_default
-#ifndef  __gftl_disable_index_kind_overload
-      generic :: reserve => reserve_size_kind
-#endif
+      !procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
+!      procedure :: reserve_default => __MANGLE(reserve_default)
+!      generic :: reserve => reserve_default
+!#ifndef  __gftl_disable_index_kind_overload
+!      generic :: reserve => reserve_size_kind
+!#endif
 
 
       ! Factory methods for iterators
@@ -133,17 +129,9 @@
 #ifdef __T_EQ__
       procedure :: get_index => __MANGLE(get_index)
 #endif
-      ! I/O
-      !procedure :: write_formatted => __MANGLE(write_formatted)
-      !generic :: write(formatted) => write_formatted
 
-      ! private helper procedures
-      !procedure, private :: set_capacity => __MANGLE(set_capacity)
-      procedure, private :: grow_to => __MANGLE(grow_to)
       procedure, private :: downsize=>__MANGLE(downsize)
       procedure, private :: idx => __MANGLE(idx)
-      !procedure, private :: bucket_index => __MANGLE(bucket_index)
-      !procedure, private :: bucket_offset => __MANGLE(bucket_offset)
    end type __deque
 
 
