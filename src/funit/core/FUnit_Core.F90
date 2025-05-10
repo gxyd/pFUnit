@@ -25,7 +25,7 @@ module FUnit_Core
    use PF_ResultPrinter
    use PF_DebugListener
 
-   use gFTL_StringVector
+   ! use gFTL_StringVector
    use gFTL_StringUnlimitedMap
 
    use PF_ParallelContext

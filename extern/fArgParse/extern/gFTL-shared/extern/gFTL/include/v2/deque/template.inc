@@ -14,13 +14,6 @@
    ! Iterator functions
    public :: operator(+)
    public :: operator(-)
-
-
-   ! Iterator and possibly container functions:
-   ! The following are always defined for the iterator.
-   ! May not also be defined for the container itself depending
-   ! on properties of parameter T.
-
    public :: operator(==)
    public :: operator(/=)
 
@@ -63,9 +56,6 @@
    end type __deque_iterator__
 
 
-   ! Non type-bound functions
-
-   ! Relational operators
    interface operator(==)
       module procedure __MANGLE(iter_equal)
    end interface operator(==)
@@ -76,16 +66,11 @@
 
 type __deque_riterator__
 private
-
 type(__deque), pointer :: deque
-integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
-
-contains
-
+   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
 end type __deque_riterator__
 
 
-! Relational operators
 interface operator(==)
 module procedure __MANGLE(riter_equal)
 end interface operator(==)

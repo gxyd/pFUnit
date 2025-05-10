@@ -18,8 +18,9 @@ endif()
 
 set (T_types
   ${T_types_ordered}
-  Complex32 Complex64 Complex DoubleComplex
-  Logical
+  # Complex32 Complex64 Complex DoubleComplex
+  Complex32
+  # Logical
   Unlimited
 )
 
