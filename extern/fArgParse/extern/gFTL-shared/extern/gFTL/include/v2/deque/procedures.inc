@@ -1,4 +1,3 @@
-#include "parameters/T/copy_deque_T_to_internal_T.inc"
 #define __guard __deque_guard
 
 #if defined(__deque_iterator)
@@ -12,10 +11,6 @@
 #else
 #    define __deque_riterator__ DequeRIterator
 #endif
-
-! define derived generic template parameters from internal parameters.
-#include "parameters/T/define_derived_macros.inc"
-
 
    function __MANGLE(new_deque_range)(first, last) result(v)
       type (__deque) :: v
@@ -71,9 +66,6 @@
 #    undef __deque_riterator__
 #endif
 
-! undef derived template parameters
-#include "parameters/T/undef_derived_macros.inc"
-
 ! undef internal template parameters
 #undef __guard
-#include "parameters/T/undef_internal.inc"
+!#include "parameters/T/undef_internal.inc"
