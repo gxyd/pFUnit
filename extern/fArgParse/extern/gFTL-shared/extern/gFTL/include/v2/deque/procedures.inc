@@ -60,36 +60,6 @@
       return
    end function __MANGLE(size)
 
-   ! =======================
-   !  capacity - size of internal arrays; >= size()
-   ! =======================
-   pure function __MANGLE(capacity)(this) result(capacity)
-      integer(kind=GFTL_SIZE_KIND) :: capacity
-      class (__deque), intent(in) :: this
-
-      if (allocated(this%buckets)) then
-         capacity = size(this%buckets, kind=GFTL_SIZE_KIND)
-      else
-         capacity = 0
-      end if
-
-      return
-   end function __MANGLE(capacity)
-
-
-
-   ! Hopefully this is inlined
-   function __MANGLE(idx)(this, i) result(idx)
-      integer(kind=GFTL_SIZE_KIND) :: idx
-      class(__deque), intent(in) :: this
-      integer(kind=GFTL_SIZE_KIND) :: i
-
-      idx = 1 + modulo(this%front_ + (i-1) - 1, this%capacity())
-
-   end function __MANGLE(idx)
-
-
-
 
    ! =======================
    !  of - return ith element without bounds checks
@@ -100,36 +70,10 @@
       __T_declare_result__, pointer :: res
 
 
-      res => this%buckets(this%idx(i))%ptr%bucket_items%item
+      !res => this%buckets(this%idx(i))%ptr%bucket_items%item
 
       return
    end function __MANGLE(of_size_kind)
-
-
-   ! =======================
-   !  back() - last element; undefined behavior for empty container
-   ! =======================
-   function __MANGLE(back)(this) result(res)
-      class(__deque), target, intent(in) :: this
-      __T_declare_result__, pointer :: res
-
-      res => this%buckets(this%back_)%ptr%bucket_items%item
-
-      return
-   end function __MANGLE(back)
-
-   ! =======================
-   !  front() ! first element; undefined behavior for empty container
-   ! =======================
-   function __MANGLE(front)(this) result(res)
-      class(__deque), target, intent(in) :: this
-      __T_declare_result__, pointer :: res
-
-      res => this%buckets(this%front_)%ptr%bucket_items%item
-
-      return
-   end function __MANGLE(front)
-
 
 
 #if defined(__T_EQ__) || defined(__T_LT__)
@@ -149,7 +93,7 @@
       if (equal) then ! Same elements?
          
          do i = 1, lhs%size_
-            ii = lhs%idx(i)
+            !ii = lhs%idx(i)
 
             associate ( &
                  item_l => lhs%buckets(ii)%ptr%bucket_items%item, &
@@ -271,105 +215,6 @@
 
 
 #endif
-
-
-
-   subroutine __MANGLE(resize_default)(this, count, unused, value, rc)
-      class(__deque), intent(inout) :: this
-      integer, intent(in) :: count
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      __T_declare_dummy__, optional, intent(in) :: value
-      integer, optional, intent(out) :: rc
-
-      __UNUSED_DUMMY(unused)
-
-      !call this%resize(int(count,kind=GFTL_SIZE_KIND), value=value, rc=rc)
-
-   end subroutine __MANGLE(resize_default)
-
-
-   ! =======================
-   !  clear
-   ! =======================
-   subroutine __MANGLE(clear)(this)
-      class(__deque), intent(inout) :: this
-
-      !call this%downsize(this%front_, this%back_)
-      this%front_ = -1
-      this%back_ = 0
-
-      return
-   end subroutine __MANGLE(clear)
-
-
-   ! =======================
-   !  shrink_to_fit
-   ! =======================
-
-   subroutine __MANGLE(shrink_to_fit)(this)
-      class(__deque), intent(inout) :: this
-
-      if (this%size_ < this%capacity()) then
-         !call this%set_capacity(this%size_)
-      endif
-      return
-   end subroutine __MANGLE(shrink_to_fit)
-
-   ! =======================
-   !  begin() - create an iterator
-   ! =======================
-   function __MANGLE(begin)(this) result(iter)
-      type (__deque_iterator__) :: iter
-      class (__deque), target, intent(in) :: this
-
-      iter%current_index = 1
-      iter%deque => this
-      
-   end function __MANGLE(begin)
-
-
-   ! =======================
-   !  end()
-   !  Construct  forward iterator, initially set to just
-   !  after last element of deque.
-   ! =======================
-   function __MANGLE(end)(this) result(iter)
-      class (__deque), target, intent(in) :: this
-      type (__deque_iterator__) :: iter
-
-      iter%current_index = this%size() + 1 ! past the end
-      iter%deque => this
-
-   end function __MANGLE(end)
-
-
-   ! =======================
-   !  rbegin() - create a reverse iterator
-   ! =======================
-   function __MANGLE(rbegin)(this) result(iter)
-      type (__deque_riterator__) :: iter
-      class (__deque), target, intent(in) :: this
-
-      iter%current_index = this%size_
-      iter%deque => this
-
-   end function __MANGLE(rbegin)
-
-
-   ! =======================
-   !  rend()
-   !  Construct  reverse iterator, initially set to just
-   !  before first element of deque
-   ! =======================
-   function __MANGLE(rend)(this) result(iter)
-      class (__deque), target, intent(in) :: this
-      type (__deque_riterator__) :: iter
-
-      iter%current_index = 0 ! before beginning
-      iter%deque => this
-
-   end function __MANGLE(rend)
-
 
 
 #include "deque/iterator_procedures.inc"

@@ -68,7 +68,6 @@
    contains
 
       procedure :: size => __MANGLE(size)
-      procedure :: capacity => __MANGLE(capacity)
 
 
 #ifndef  __gftl_disable_index_kind_overload
@@ -77,28 +76,6 @@
       generic :: of => of_size_kind
 #endif
 
-      procedure :: back => __MANGLE(back)
-      procedure :: front => __MANGLE(front)
-
-      procedure :: resize_default => __MANGLE(resize_default)
-      generic :: resize => resize_default
-      procedure :: clear => __MANGLE(clear)
-      procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
-
-
-      ! Factory methods for iterators
-      procedure :: begin => __MANGLE(begin)
-      procedure :: end => __MANGLE(end)
-      procedure :: rbegin => __MANGLE(rbegin)
-      procedure :: rend => __MANGLE(rend)
-
-      ! No analog for the following in STL, but it seems very convenient.
-!#ifdef __T_EQ__
-!      procedure :: get_index => __MANGLE(get_index)
-!#endif
-
-      !procedure, private :: downsize=>__MANGLE(downsize)
-      procedure, private :: idx => __MANGLE(idx)
    end type __deque
 
 
