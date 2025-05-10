@@ -21,8 +21,6 @@
    public :: operator(<=)
    public :: operator(>=)
 
-#define __guard deque_
-
 #define __deque_iterator__ DequeIterator
 
 #define __deque_riterator__ DequeRIterator
@@ -113,6 +111,3 @@ end interface operator(/=)
       type(__deque_riterator__), intent(in) :: b
       ne = .not. (a == b)
    end function deque_riter_not_equal
-
-! undef internal template parameters
-#undef __guard
