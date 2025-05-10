@@ -289,49 +289,12 @@
 
 
    ! =======================
-   !  downsize()
-   ! =======================
-   subroutine __MANGLE(downsize)(this, from, to)
-      class(__deque), intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: from, to  ! assumes newsize<=size()
-
-#if defined(__T_FREE__)
-      integer(kind=GFTL_SIZE_KIND) :: i, ii
-      if (from <= to) then
-
-         do i = from, to - 1
-            ii = this%idx(i)
-            __T_FREE__(this%buckets(ii)%ptr%bucket_items%item)
-         end do
-
-      else
-
-         do i = from, this%capacity()
-            ii = this%idx(i)
-            __T_FREE__(this%buckets(ii)%ptr%bucket_items%item)
-         end do
-         do i = 1, to
-            ii = this%idx(i)
-            __T_FREE__(this%buckets(ii)%ptr%bucket_items%item)
-         end do
-
-      endif
-      __UNUSED_DUMMY(ii)
-#endif
-
-      this%size_ = this%size_ - modulo(from - to, this%capacity())  - 1
-
-      return
-   end subroutine __MANGLE(downsize)
-
-
-   ! =======================
    !  clear
    ! =======================
    subroutine __MANGLE(clear)(this)
       class(__deque), intent(inout) :: this
 
-      call this%downsize(this%front_, this%back_)
+      !call this%downsize(this%front_, this%back_)
       this%front_ = -1
       this%back_ = 0
 
@@ -351,59 +314,6 @@
       endif
       return
    end subroutine __MANGLE(shrink_to_fit)
-
-
-   ! =======================
-   !  swap
-   ! =======================
-   subroutine __MANGLE(swap)(this, x)
-      class(__deque), target, intent(inout) :: this
-      type(__deque), target, intent(inout) :: x
-
-      type(__MANGLE(bucket_ptr)), dimension(:), allocatable :: tmp
-      integer(kind=GFTL_SIZE_KIND) :: i_tmp
-
-      call move_alloc(this%buckets, tmp)
-      call move_alloc(x%buckets, this%buckets)
-      call move_alloc(tmp, x%buckets)
-
-      i_tmp = this%size_
-      this%size_ = x%size_
-      x%size_ = i_tmp
-
-      i_tmp = this%front_
-      this%front_ = x%front_
-      x%front_ = i_tmp
-
-      i_tmp = this%back_
-      this%back_ = x%back_
-      x%back_ = i_tmp
-      
-      return
-   end subroutine __MANGLE(swap)
-
-
-#ifdef __T_EQ__
-   ! =======================
-   !  get_index() Return index of first item equal to value
-   !  If not found, return 0.
-   ! =======================
-      function __MANGLE(get_index)(this, value) result(i)
-         class(__deque), target, intent(in) :: this
-         __T_declare_dummy__, intent(in) :: value
-
-         integer(kind=GFTL_SIZE_KIND) :: i, ii
-         
-         do i=1, this%size_
-            ii = this%idx(i)
-            if (__T_EQ__(this%buckets(ii)%ptr%bucket_items%item, value)) return
-         end do
-         i=0
-
-         return
-      end function __MANGLE(get_index)
-#endif      
-
 
    ! =======================
    !  begin() - create an iterator

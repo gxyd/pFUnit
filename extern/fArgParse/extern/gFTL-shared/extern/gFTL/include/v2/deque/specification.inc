@@ -34,15 +34,6 @@
    
    ! Structure constructors
    interface __deque
-      !module procedure __MANGLE(new_deque_empty)
-#ifndef  __gftl_disable_index_kind_overload
-      !module procedure __MANGLE(new_deque_fill_size_kind)
-#endif
-      !module procedure __MANGLE(new_deque_fill_default)
-      !module procedure __MANGLE(new_deque_range)
-      !module procedure __MANGLE(new_deque_copy)
-!!$      module procedure __MANGLE(new_deque_move)
-
    end interface __deque
 
    ! Internal wrapper type allows support for types that cannot be
@@ -81,9 +72,7 @@
 
 
 #ifndef  __gftl_disable_index_kind_overload
-      !procedure :: at_size_kind => __MANGLE(at_size_kind)
       procedure :: of_size_kind => __MANGLE(of_size_kind)
-      !generic :: at => at_size_kind
       generic :: at => of_size_kind
       generic :: of => of_size_kind
 #endif
@@ -91,32 +80,10 @@
       procedure :: back => __MANGLE(back)
       procedure :: front => __MANGLE(front)
 
-      !procedure :: push_back => __MANGLE(push_back)
-      !procedure :: pop_back => __MANGLE(pop_back)
-
-      ! deques are not vectors ...
-      !procedure :: push_front => __MANGLE(push_front)
-      !procedure :: pop_front => __MANGLE(pop_front)
-
-      !procedure :: resize_size_kind => __MANGLE(resize_size_kind)
       procedure :: resize_default => __MANGLE(resize_default)
       generic :: resize => resize_default
-!#ifndef  __gftl_disable_index_kind_overload
-!      generic :: resize => resize_size_kind
-!#endif
-
       procedure :: clear => __MANGLE(clear)
       procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
-
-
-      procedure :: swap => __MANGLE(swap)
-
-      !procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
-!      procedure :: reserve_default => __MANGLE(reserve_default)
-!      generic :: reserve => reserve_default
-!#ifndef  __gftl_disable_index_kind_overload
-!      generic :: reserve => reserve_size_kind
-!#endif
 
 
       ! Factory methods for iterators
@@ -126,17 +93,16 @@
       procedure :: rend => __MANGLE(rend)
 
       ! No analog for the following in STL, but it seems very convenient.
-#ifdef __T_EQ__
-      procedure :: get_index => __MANGLE(get_index)
-#endif
+!#ifdef __T_EQ__
+!      procedure :: get_index => __MANGLE(get_index)
+!#endif
 
-      procedure, private :: downsize=>__MANGLE(downsize)
+      !procedure, private :: downsize=>__MANGLE(downsize)
       procedure, private :: idx => __MANGLE(idx)
    end type __deque
 
 
    interface swap
-      module procedure __MANGLE(swap)
    end interface swap
 
 
