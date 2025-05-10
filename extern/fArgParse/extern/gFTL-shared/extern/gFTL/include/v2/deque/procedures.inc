@@ -131,50 +131,6 @@
    end function __MANGLE(front)
 
 
-   ! =======================
-   !  set() - modify contents of existing item with 
-   ! =======================
-   subroutine __MANGLE(set_size_kind)(this, i, value)
-      class(__deque), intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: i
-      __T_declare_dummy__, intent(in) :: value
-
-      integer(kind=GFTL_SIZE_KIND) :: ii
-
-      ii = this%idx(i)
-      __T_FREE__(this%buckets(ii)%ptr%bucket_items%item)
-      __T_COPY__(this%buckets(ii)%ptr%bucket_items%item, value)
-
-
-      return
-   end subroutine __MANGLE(set_size_kind)
-
-
-   subroutine __MANGLE(set_default)(this, i, value)
-      class(__deque), intent(inout) :: this
-      integer, intent(in) :: i
-      __T_declare_dummy__, intent(in) :: value
-
-      call this%set(int(i,kind=GFTL_SIZE_KIND), value)
-
-   end subroutine __MANGLE(set_default)
-
-   ! =======================
-   !  reset()
-   ! =======================
-   subroutine __MANGLE(reset)(this)
-      class(__deque), intent(inout) :: this
-
-      call this%clear()
-      if (allocated(this%buckets)) then
-         deallocate(this%buckets)
-      end if
-      this%front_ = -1
-      this%back_ = 0
-
-      return
-   end subroutine __MANGLE(reset)
-
 
 #if defined(__T_EQ__) || defined(__T_LT__)
    ! =======================
@@ -321,165 +277,165 @@
    ! =======================
    !  push_back()
    ! =======================
-   subroutine __MANGLE(push_back)(this, value, unused, rc)
-      class(__deque), intent(inout) :: this
-      __T_declare_dummy__, intent(in) :: value
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      integer, optional, intent(out) :: rc
+   !subroutine __MANGLE(push_back)(this, value, unused, rc)
+   !   class(__deque), intent(inout) :: this
+   !   __T_declare_dummy__, intent(in) :: value
+   !   type (KeywordEnforcer), optional, intent(in) :: unused
+   !   integer, optional, intent(out) :: rc
 
-      __UNUSED_DUMMY(unused)
+   !   __UNUSED_DUMMY(unused)
 
-      call this%grow_to(this%size_+1)
+   !   call this%grow_to(this%size_+1)
 
-      if (this%back_ == this%capacity()) then
-         this%back_ = 1
-      else
-         this%back_ = this%back_ + 1
-      end if
+   !   if (this%back_ == this%capacity()) then
+   !      this%back_ = 1
+   !   else
+   !      this%back_ = this%back_ + 1
+   !   end if
 
-      ! Special case: first element also changes front
-      if (this%size_ == 0) this%front_ = this%back_
-      call this%resize(this%size_+1, value=value, rc=rc)
+   !   ! Special case: first element also changes front
+   !   if (this%size_ == 0) this%front_ = this%back_
+   !   call this%resize(this%size_+1, value=value, rc=rc)
 
-      return
+   !   return
 
-   end subroutine __MANGLE(push_back)
+   !end subroutine __MANGLE(push_back)
 
 
    ! =======================
    !  pop_back()
    ! =======================
-   subroutine __MANGLE(pop_back)(this)
-      class(__deque), intent(inout) :: this
+   !subroutine __MANGLE(pop_back)(this)
+   !   class(__deque), intent(inout) :: this
 
-      integer(kind=GFTL_SIZE_KIND) :: old_back
+   !   integer(kind=GFTL_SIZE_KIND) :: old_back
 
-      old_back = this%back_
+   !   old_back = this%back_
 
-      if (this%back_ == 1) then
-         this%back_ = this%capacity()
-      else
-         this%back_ = this%back_ - 1
-      end if
+   !   if (this%back_ == 1) then
+   !      this%back_ = this%capacity()
+   !   else
+   !      this%back_ = this%back_ - 1
+   !   end if
 
-      call this%downsize(old_back, old_back)
+   !   call this%downsize(old_back, old_back)
 
 
-      return
-   end subroutine __MANGLE(pop_back)
+   !   return
+   !end subroutine __MANGLE(pop_back)
 
 
    ! =======================
    !  push_front()
    ! =======================
-   subroutine __MANGLE(push_front)(this, value, unused, rc)
-      class(__deque), intent(inout) :: this
-      __T_declare_dummy__, intent(in) :: value
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      integer, optional, intent(out) :: rc
+   !subroutine __MANGLE(push_front)(this, value, unused, rc)
+   !   class(__deque), intent(inout) :: this
+   !   __T_declare_dummy__, intent(in) :: value
+   !   type (KeywordEnforcer), optional, intent(in) :: unused
+   !   integer, optional, intent(out) :: rc
 
-      __UNUSED_DUMMY(unused)
+   !   __UNUSED_DUMMY(unused)
 
-      if (this%front_ == 1) then
-         this%front_ = this%size_
-      else
-         this%front_ = this%front_ - 1
-      end if
+   !   if (this%front_ == 1) then
+   !      this%front_ = this%size_
+   !   else
+   !      this%front_ = this%front_ - 1
+   !   end if
 
-      call this%grow_to(this%size_+1)
+   !   call this%grow_to(this%size_+1)
 
-      ! Special case: first element also changes back
-      if (this%size_ == 0) this%back_ = this%front_
+   !   ! Special case: first element also changes back
+   !   if (this%size_ == 0) this%back_ = this%front_
 
-      call this%resize(this%size_+1, value=value, rc=rc)
+   !   call this%resize(this%size_+1, value=value, rc=rc)
 
-      return
+   !   return
 
-   end subroutine __MANGLE(push_front)
+   !end subroutine __MANGLE(push_front)
 
 
    ! =======================
    !  pop_front()
    ! =======================
-   subroutine __MANGLE(pop_front)(this)
-      class(__deque), intent(inout) :: this
+   !subroutine __MANGLE(pop_front)(this)
+   !   class(__deque), intent(inout) :: this
 
-      integer(kind=GFTL_SIZE_KIND) :: old_front
-      
-      old_front = this%front_
-      if (this%front_ == this%capacity()) then
-         this%front_ = 1
-      else
-         this%front_ = this%front_ + 1
-      end if
-      
-      call this%downsize(old_front, old_front)
+   !   integer(kind=GFTL_SIZE_KIND) :: old_front
+   !   
+   !   old_front = this%front_
+   !   if (this%front_ == this%capacity()) then
+   !      this%front_ = 1
+   !   else
+   !      this%front_ = this%front_ + 1
+   !   end if
+   !   
+   !   call this%downsize(old_front, old_front)
 
-      return
-   end subroutine __MANGLE(pop_front)
+   !   return
+   !end subroutine __MANGLE(pop_front)
 
 
 
    ! =======================
    !  resize()
    ! =======================
-   subroutine __MANGLE(resize_size_kind)(this, count, unused, value, rc)
-      class(__deque), intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: count
-      type (KeywordEnforcer), optional, intent(in) :: unused
-      __T_declare_dummy__, optional, intent(in) :: value
-      integer, optional, intent(out) :: rc
-
-      integer(kind=GFTL_SIZE_KIND) :: old_size
-      integer :: status
-#if defined(__T_FREE__)
-      integer(kind=GFTL_SIZE_KIND) :: i, ii
-#endif
-
-      if (count == this%size_) then
-         if (present(rc)) rc = SUCCESS
-         return
-      end if
-      if (count < 0) then
-         if (present(rc)) rc = ILLEGAL_INPUT
-         return
-      end if
-
-      if (present(rc)) rc = SUCCESS
-
-      old_size = this%size_
-
-      call this%reserve(count, rc=status)
-      if (status/=0) then
-         if (present(rc)) rc=status
-         return
-      end if
-
-      this%size_ = count
-#if defined(__T_FREE__)
-      do i = count + 1, old_size
-         ii = this%idx(i)
-         __T_FREE__(this%buckets(ii)%ptr%bucket_items%item)
-      end do
-
-      if (count > old_size) then
-         if (present(value)) then
-            do i = old_size + 1, count
-               ii = this%idx(i)
-               __T_COPY__(this%buckets(ii)%ptr%bucket_items%item, value)
-            end do
-         else
-            do i = old_size + 1, count
-               ii = this%idx(i)
-               __T_COPY__(this%buckets(ii)%ptr%bucket_items%item, __T_default__)
-            end do
-         end if
-      endif
-#endif
-
-      return
-      __UNUSED_DUMMY(unused)
-   end subroutine __MANGLE(resize_size_kind)
+!   subroutine __MANGLE(resize_size_kind)(this, count, unused, value, rc)
+!      class(__deque), intent(inout) :: this
+!      integer(kind=GFTL_SIZE_KIND), intent(in) :: count
+!      type (KeywordEnforcer), optional, intent(in) :: unused
+!      __T_declare_dummy__, optional, intent(in) :: value
+!      integer, optional, intent(out) :: rc
+!
+!      integer(kind=GFTL_SIZE_KIND) :: old_size
+!      integer :: status
+!#if defined(__T_FREE__)
+!      integer(kind=GFTL_SIZE_KIND) :: i, ii
+!#endif
+!
+!      if (count == this%size_) then
+!         if (present(rc)) rc = SUCCESS
+!         return
+!      end if
+!      if (count < 0) then
+!         if (present(rc)) rc = ILLEGAL_INPUT
+!         return
+!      end if
+!
+!      if (present(rc)) rc = SUCCESS
+!
+!      old_size = this%size_
+!
+!      call this%reserve(count, rc=status)
+!      if (status/=0) then
+!         if (present(rc)) rc=status
+!         return
+!      end if
+!
+!      this%size_ = count
+!#if defined(__T_FREE__)
+!      do i = count + 1, old_size
+!         ii = this%idx(i)
+!         __T_FREE__(this%buckets(ii)%ptr%bucket_items%item)
+!      end do
+!
+!      if (count > old_size) then
+!         if (present(value)) then
+!            do i = old_size + 1, count
+!               ii = this%idx(i)
+!               __T_COPY__(this%buckets(ii)%ptr%bucket_items%item, value)
+!            end do
+!         else
+!            do i = old_size + 1, count
+!               ii = this%idx(i)
+!               __T_COPY__(this%buckets(ii)%ptr%bucket_items%item, __T_default__)
+!            end do
+!         end if
+!      endif
+!#endif
+!
+!      return
+!      __UNUSED_DUMMY(unused)
+!   end subroutine __MANGLE(resize_size_kind)
 
    subroutine __MANGLE(resize_default)(this, count, unused, value, rc)
       class(__deque), intent(inout) :: this
@@ -490,7 +446,7 @@
 
       __UNUSED_DUMMY(unused)
 
-      call this%resize(int(count,kind=GFTL_SIZE_KIND), value=value, rc=rc)
+      !call this%resize(int(count,kind=GFTL_SIZE_KIND), value=value, rc=rc)
 
    end subroutine __MANGLE(resize_default)
 

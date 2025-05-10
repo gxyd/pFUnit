@@ -91,26 +91,19 @@
       procedure :: back => __MANGLE(back)
       procedure :: front => __MANGLE(front)
 
-      procedure :: set_size_kind => __MANGLE(set_size_kind)
-      procedure :: set_default => __MANGLE(set_default)
-      generic :: set => set_default
-#ifndef  __gftl_disable_index_kind_overload
-      generic :: set => set_size_kind
-#endif
-
-      procedure :: push_back => __MANGLE(push_back)
-      procedure :: pop_back => __MANGLE(pop_back)
+      !procedure :: push_back => __MANGLE(push_back)
+      !procedure :: pop_back => __MANGLE(pop_back)
 
       ! deques are not vectors ...
-      procedure :: push_front => __MANGLE(push_front)
-      procedure :: pop_front => __MANGLE(pop_front)
+      !procedure :: push_front => __MANGLE(push_front)
+      !procedure :: pop_front => __MANGLE(pop_front)
 
-      procedure :: resize_size_kind => __MANGLE(resize_size_kind)
+      !procedure :: resize_size_kind => __MANGLE(resize_size_kind)
       procedure :: resize_default => __MANGLE(resize_default)
       generic :: resize => resize_default
-#ifndef  __gftl_disable_index_kind_overload
-      generic :: resize => resize_size_kind
-#endif
+!#ifndef  __gftl_disable_index_kind_overload
+!      generic :: resize => resize_size_kind
+!#endif
 
       procedure :: clear => __MANGLE(clear)
       procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
@@ -121,7 +114,6 @@
       generic :: erase => erase_range
 
       procedure :: swap => __MANGLE(swap)
-      procedure :: reset => __MANGLE(reset)
 
       procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
       procedure :: reserve_default => __MANGLE(reserve_default)
