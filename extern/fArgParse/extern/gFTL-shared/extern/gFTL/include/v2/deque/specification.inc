@@ -83,7 +83,6 @@ contains
 
 end type __deque_riterator__
 
-
 ! Relational operators
 interface operator(==)
 module procedure __MANGLE(riter_equal)

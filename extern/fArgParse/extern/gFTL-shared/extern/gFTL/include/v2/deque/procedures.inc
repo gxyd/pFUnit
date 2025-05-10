@@ -13,12 +13,6 @@
 #    define __deque_riterator__ DequeRIterator
 #endif
 
-!#if defined(__deque_bucket_size)
-!#    define __deque_bucket_size__ __deque_bucket_size
-!#else
-!#    define __deque_bucket_size__ 1
-!#endif
-
 ! define derived generic template parameters from internal parameters.
 #include "parameters/T/define_derived_macros.inc"
 
@@ -77,15 +71,9 @@
 #    undef __deque_riterator__
 #endif
 
-!#if defined(__deque_bucket_size__)
-!#    undef __deque_bucket_size__
-!#endif
-
 ! undef derived template parameters
 #include "parameters/T/undef_derived_macros.inc"
 
 ! undef internal template parameters
 #undef __guard
 #include "parameters/T/undef_internal.inc"
-
-
