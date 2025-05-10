@@ -49,91 +49,6 @@
 
 
    ! =======================
-   !  Structure constructors
-   ! =======================
-   function __MANGLE(new_deque_empty)() result(v)
-      type (__deque) :: v
-      logical, parameter :: flag = .false.
-
-      if (flag) print*,shape(v) ! avoid warning about unused return value
-
-      return
-   end function __MANGLE(new_deque_empty)
-
-
-   function __MANGLE(new_deque_fill_size_kind)(n, value) result(v)
-      type (__deque) :: v
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: n
-      __T_declare_dummy__, optional, intent(in) :: value
-
-      call v%resize(n, value=value)
-
-      return
-   end function __MANGLE(new_deque_fill_size_kind)
-
-
-   function __MANGLE(new_deque_fill_default)(n, value) result(v)
-      type (__deque) :: v
-      integer, intent(in) :: n
-      __T_declare_dummy__, optional, intent(in) :: value
-
-      call v%resize(n, value=value)
-
-      return
-   end function __MANGLE(new_deque_fill_default)
-
-
-   function __MANGLE(new_deque_range)(first, last) result(v)
-      type (__deque) :: v
-      type (__deque_iterator__), intent(in) :: first
-      type (__deque_iterator__), intent(in) :: last
-
-      type (__deque_iterator__) :: iter
-
-      iter = first
-      do while (iter /= last)
-         call v%push_back(iter%of())
-      end do
-
-      return
-   end function __MANGLE(new_deque_range)
-
-
-   function __MANGLE(new_deque_copy)(x) result(v)
-      type (__deque) :: v
-      type (__deque) :: x
-
-      integer(kind=GFTL_SIZE_KIND) :: i
-
-      call v%resize(x%size())
-      do i = 1, x%size()
-         v%buckets(i)%ptr%bucket_items = x%buckets(i)%ptr%bucket_items
-      end do
-
-      return
-   end function __MANGLE(new_deque_copy)
-
-
-!!$   function __MANGLE(new_deque_move)(x) result(v)
-!!$      type (__deque) :: v
-!!$      type (__deque) :: x
-!!$
-!!$      integer(kind=GFTL_SIZE_KIND) :: i
-!!$
-!!$      call v%resize(x%size())
-!!$      do i = 1, x%size()
-!!$         v%buckets(i)%ptr => x%buckets(i)%ptr
-!!$      end do
-!!$
-!!$      ! Clear x without deallocating items
-!!$      deallocate(x%buckets)
-!!$
-!!$      return
-!!$   end function __MANGLE(new_deque_move)
-
-
-
-   ! =======================
    !  size
    ! =======================
    pure function __MANGLE(size)(this) result(res)
@@ -144,19 +59,6 @@
 
       return
    end function __MANGLE(size)
-
-   ! =======================
-   !  max_size()
-   ! =======================
-   pure function __MANGLE(max_size)() result(res)
-      integer(kind=GFTL_SIZE_KIND) :: res
-
-      integer(kind=GFTL_SIZE_KIND) :: index
-      
-      res = huge(index)
-
-      return
-   end function __MANGLE(max_size)
 
    ! =======================
    !  capacity - size of internal arrays; >= size()
@@ -175,16 +77,6 @@
    end function __MANGLE(capacity)
 
 
-   ! =======================
-   !  empty() - is container empty?
-   ! =======================
-   pure logical function __MANGLE(empty)(this) result(empty)
-      class(__deque), intent(in) :: this
-
-      empty = (this%size_==0)
-
-   end function __MANGLE(empty)
-
 
    ! Hopefully this is inlined
    function __MANGLE(idx)(this, i) result(idx)
@@ -197,37 +89,6 @@
    end function __MANGLE(idx)
 
 
-   ! =======================
-   !  at() - return ith element with bounds check
-   ! =======================
-   function __MANGLE(at_size_kind)(this, i, rc) result(res)
-      class(__deque), target, intent(in) :: this
-      integer(KIND=GFTL_SIZE_KIND), intent(in) :: i
-      integer, intent(out) :: rc
-      __T_declare_result__, pointer :: res
-
-      if ((i <= 0) .or. (i > this%size_)) then
-         rc = OUT_OF_RANGE
-         res => null()
-      else
-         rc = SUCCESS
-         res => this%buckets(this%idx(i))%ptr%bucket_items%item
-      end if
-
-      return
-   end function __MANGLE(at_size_kind)
-
-
-   function __MANGLE(at_default)(this, i, rc) result(res)
-      class(__deque), target, intent(in) :: this
-      integer, intent(in) :: i
-      __T_declare_result__, pointer :: res
-      integer, intent(out) :: rc
-
-      res => this%at(int(i,GFTL_SIZE_KIND),rc)
-
-      return
-   end function __MANGLE(at_default)
 
 
    ! =======================
@@ -243,16 +104,6 @@
 
       return
    end function __MANGLE(of_size_kind)
-
-   function __MANGLE(of_default)(this, i) result(res)
-      class(__deque), target, intent(in) :: this
-      integer, intent(in) :: i
-      __T_declare_result__, pointer :: res
-
-      res => this%at(int(i,GFTL_SIZE_KIND))
-
-      return
-   end function __MANGLE(of_default)
 
 
    ! =======================
@@ -703,7 +554,7 @@
       class(__deque), intent(inout) :: this
 
       if (this%size_ < this%capacity()) then
-         call this%set_capacity(this%size_)
+         !call this%set_capacity(this%size_)
       endif
       return
    end subroutine __MANGLE(shrink_to_fit)
@@ -774,16 +625,9 @@
       __UNUSED_DUMMY(unused)
 
       if (present(rc)) then
-         if (capacity > this%max_size()) then
-            rc = LENGTH_ERROR
-            return
-         else
-            rc = SUCCESS
-         end if
       end if
 
       if (capacity>this%capacity()) then
-         call this%set_capacity(capacity)
       endif
 
       return
@@ -798,74 +642,12 @@
       __UNUSED_DUMMY(unused)
 
       if (present(rc)) then
-         if (capacity > this%max_size()) then
-            rc = LENGTH_ERROR
-            return
-         else
-            rc = SUCCESS
-         end if
       end if
 
       call this%reserve(int(capacity,kind=GFTL_SIZE_KIND))
       return
    end subroutine __MANGLE(reserve_default)
 
-
-   ! =======================
-   !  set_capacity()
-   ! =======================
-   subroutine __MANGLE(set_capacity)(this, capacity)
-      class(__deque), target, intent(inout) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: capacity  ! capacity must be >=0
-      type(__MANGLE(bucket_ptr)), dimension(:), allocatable :: temp
-
-      integer(kind=GFTL_SIZE_KIND) :: i, ii
-      integer(kind=GFTL_SIZE_KIND) :: old_capacity
-
-      if (capacity > 0) then                     ! capacity>0
-         if (.not.allocated(this%buckets)) then   ! not allocated
-            old_capacity = 0
-            allocate(this%buckets(capacity))
-         else                                      ! allocated
-            old_capacity = size(this%buckets,kind=GFTL_SIZE_KIND)
-            allocate(temp(capacity))
-            do i = 1, min(old_capacity, capacity)
-               ii = this%idx(i)
-               ! Rebase front to start of array
-               temp(i)%ptr => this%buckets(ii)%ptr
-            end do
-            ! Deallocations
-            ! Free up excess buckets, if any
-            do i= min(old_capacity,capacity)+1, old_capacity
-               ii = this%idx(i)
-               deallocate(this%buckets(ii)%ptr)
-            end do
-            deallocate(this%buckets)
-            call move_alloc(temp, this%buckets)
-            if (this%size_ > 0) then ! shift the markers
-               this%front_ = 1
-               this%back_ = this%size_
-            end if
-         endif
-         ! Must still allocate any new buckets
-         do i = old_capacity + 1, capacity
-            ii = this%idx(i)
-            allocate(this%buckets(ii)%ptr)
-         end do
-      else if (allocated(this%buckets)) then  ! capacity==0
-         ! Note: size_ must be 0 to reach this point.
-
-         do i = 1, old_capacity
-            deallocate(this%buckets(i)%ptr)
-         end do
-         deallocate(this%buckets)
-         
-         this%front_ = -1
-         this%back_ = 0
-      endif
-
-      return
-   end subroutine __MANGLE(set_capacity)
 
    ! =======================
    !  grow_to()
@@ -875,7 +657,7 @@
       integer(kind=GFTL_SIZE_KIND), intent(in) :: capacity
 
       if (capacity>this%capacity()) then
-         call this%set_capacity(max(2*this%size_, capacity)) ! gives O(n) algorithm for growing deque with push.
+         !call this%set_capacity(max(2*this%size_, capacity)) ! gives O(n) algorithm for growing deque with push.
       endif
 
       return
@@ -989,49 +771,6 @@
    end function __MANGLE(rend)
 
 
-   subroutine __MANGLE(write_formatted)(this, unit, iotype, v_list, iostat, iomsg)
-    class(__deque), intent(in) :: this
-    integer, intent(in) :: unit
-    character(*), intent(in) :: iotype
-    integer, intent(in) :: v_list(:)
-    integer, intent(out) :: iostat
-    character(*), intent(inout) :: iomsg
-
-    iostat = 0
-
-#ifdef __T_name__
-    write(unit,'(a)') 'Deque<' // __T_declare_string__ // '>'
-#else
-    write(unit,'(a)') 'Deque<' // 'unknown' // '>'
-#endif
-    write(unit,'(a)') new_line('a')
-    write(unit,'(4x,a10,1x,i0)') 'size: ',this%size()
-
-    __UNUSED_DUMMY(iomsg)
-    __UNUSED_DUMMY(iotype)
-    __UNUSED_DUMMY(v_list)
-   end subroutine __MANGLE(write_formatted)
-
-
-   function __MANGLE(bucket_index)(this, i) result(bucket_index)
-      integer(kind=GFTL_SIZE_KIND) :: bucket_index
-      class(__deque), intent(in) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: i
-
-      bucket_index = 1 + (i-1)/__deque_bucket_size__
-
-      __UNUSED_DUMMY(this)
-   end function __MANGLE(bucket_index)
-
-   function __MANGLE(bucket_offset)(this, i) result(bucket_offset)
-      integer(kind=GFTL_SIZE_KIND) :: bucket_offset
-      class(__deque), intent(in) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: i
-
-      bucket_offset = 1 + modulo(i-1, int(__deque_bucket_size__,kind=GFTL_SIZE_KIND))
-
-      __UNUSED_DUMMY(this)
-   end function __MANGLE(bucket_offset)
 
 #include "deque/iterator_procedures.inc"
 #include "deque/reverse_iterator_procedures.inc"

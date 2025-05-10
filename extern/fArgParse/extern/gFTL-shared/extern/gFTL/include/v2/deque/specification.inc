@@ -34,13 +34,13 @@
    
    ! Structure constructors
    interface __deque
-      module procedure __MANGLE(new_deque_empty)
+      !module procedure __MANGLE(new_deque_empty)
 #ifndef  __gftl_disable_index_kind_overload
-      module procedure __MANGLE(new_deque_fill_size_kind)
+      !module procedure __MANGLE(new_deque_fill_size_kind)
 #endif
-      module procedure __MANGLE(new_deque_fill_default)
-      module procedure __MANGLE(new_deque_range)
-      module procedure __MANGLE(new_deque_copy)
+      !module procedure __MANGLE(new_deque_fill_default)
+      !module procedure __MANGLE(new_deque_range)
+      !module procedure __MANGLE(new_deque_copy)
 !!$      module procedure __MANGLE(new_deque_move)
 
    end interface __deque
@@ -77,22 +77,13 @@
    contains
 
       procedure :: size => __MANGLE(size)
-      procedure, nopass :: max_size => __MANGLE(max_size)
       procedure :: capacity => __MANGLE(capacity)
-      procedure :: empty => __MANGLE(empty)
 
-      ! Accessors
-      procedure :: at_default => __MANGLE(at_default)
-      procedure :: of_default => __MANGLE(of_default)
-      generic :: at => at_default
-      generic :: at => of_default
-      ! Legacy interface from V1 - may be deleted in V3
-      generic :: of => of_default
 
 #ifndef  __gftl_disable_index_kind_overload
-      procedure :: at_size_kind => __MANGLE(at_size_kind)
+      !procedure :: at_size_kind => __MANGLE(at_size_kind)
       procedure :: of_size_kind => __MANGLE(of_size_kind)
-      generic :: at => at_size_kind
+      !generic :: at => at_size_kind
       generic :: at => of_size_kind
       generic :: of => of_size_kind
 #endif
@@ -151,16 +142,16 @@
       procedure :: get_index => __MANGLE(get_index)
 #endif
       ! I/O
-      procedure :: write_formatted => __MANGLE(write_formatted)
-      generic :: write(formatted) => write_formatted
+      !procedure :: write_formatted => __MANGLE(write_formatted)
+      !generic :: write(formatted) => write_formatted
 
       ! private helper procedures
-      procedure, private :: set_capacity => __MANGLE(set_capacity)
+      !procedure, private :: set_capacity => __MANGLE(set_capacity)
       procedure, private :: grow_to => __MANGLE(grow_to)
       procedure, private :: downsize=>__MANGLE(downsize)
       procedure, private :: idx => __MANGLE(idx)
-      procedure, private :: bucket_index => __MANGLE(bucket_index)
-      procedure, private :: bucket_offset => __MANGLE(bucket_offset)
+      !procedure, private :: bucket_index => __MANGLE(bucket_index)
+      !procedure, private :: bucket_offset => __MANGLE(bucket_offset)
    end type __deque
 
 
