@@ -82,10 +82,6 @@ end interface operator(/=)
 
    contains
 
-! code from deque/procedures.inc
-#define __deque_iterator__ DequeIterator
-#define __deque_riterator__ DequeRIterator
-
    function __MANGLE(new_deque_range)(first, last) result(v)
       type (__deque) :: v
       type (__deque_iterator__), intent(in) :: first
