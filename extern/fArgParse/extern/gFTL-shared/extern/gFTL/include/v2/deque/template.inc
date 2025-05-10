@@ -1,29 +1,12 @@
-
-#ifndef __gftl_common
-#define __gftl_common
-
-! Per-container name mangling   
 #define __IDENTITY(x) x
 #define __MANGLE(proc) __IDENTITY(__guard)__IDENTITY(proc)
 
-! Fortran portability support
-#    ifdef  gftl_size_kind
-#        define __gftl_size_kind gftl_size_kind
-#    else
-#        define __gftl_size_kind selected_int_kind(18)
-#    endif
-#    ifdef gftl_disable_index_kind_overload
-#        define __gftl_disable_index_kind_overload
-#    endif
    implicit none
-   integer, parameter :: GFTL_SIZE_KIND = __gftl_size_kind
-#endif
-
+   integer, parameter :: GFTL_SIZE_KIND = selected_int_kind(18)
 
 #define __deque Deque
 #define __deque_iterator DequeIterator
 #define __deque_riterator DequeRIterator
-#define __deque_guard deque_
 
 
    private
@@ -41,7 +24,7 @@
    public :: operator(<=)
    public :: operator(>=)
 
-#define __guard __deque_guard
+#define __guard deque_
 
 #define __deque_iterator__ DequeIterator
 
@@ -67,7 +50,7 @@
       private
 
       type(__deque), pointer :: deque
-      integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+      integer(kind=gftl_size_kind) :: current_index = -1 ! intentionally invalid value
 
    contains
 
@@ -85,7 +68,7 @@
 type __deque_riterator__
 private
 type(__deque), pointer :: deque
-   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+   integer(kind=gftl_size_kind) :: current_index = -1 ! intentionally invalid value
 end type __deque_riterator__
 
 
@@ -97,13 +80,9 @@ interface operator(/=)
 module procedure __MANGLE(riter_not_equal)
 end interface operator(/=)
 
-
-#undef __guard
-
    contains
 
 ! code from deque/procedures.inc
-#define __guard __deque_guard
 #define __deque_iterator__ DequeIterator
 #define __deque_riterator__ DequeRIterator
 
