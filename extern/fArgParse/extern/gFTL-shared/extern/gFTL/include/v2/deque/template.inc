@@ -6,7 +6,6 @@
 #define __deque_iterator DequeIterator
 #define __deque_riterator DequeRIterator
 #define __deque_guard deque_
-!#define __deque_bucket_size 1
 
 
    private
@@ -14,8 +13,6 @@
    public :: __deque_iterator
 
    ! Iterator functions
-   public :: advance
-   public :: distance
    public :: operator(+)
    public :: operator(-)
 
@@ -33,22 +30,6 @@
    public :: operator(<=)
    public :: operator(>=)
 
-
-!--------------------------------------------------------------------
-! Copyright © 2020 United States Government as represented by the   |
-! Administrator of the National Aeronautics and Space               |
-! Administration. No copyright is claimed in the United States      |
-! under Title 17, U.S. Code. All Other Rights Reserved.             |
-!                                                                   |
-! Licensed under the Apache License, Version 2.0.                   |
-!--------------------------------------------------------------------
-
-!---------------
-! The sequence of includes below seems a bit of overkill in the
-! case of Pair containers.  However, it becomes necessary when
-! considering higher order containers that use lower order
-! containers.  E.g., Set uses Deque and Map uses Pair.
-!---------------
 
 #include "parameters/T/copy_deque_T_to_internal_T.inc"
 #define __guard __deque_guard
@@ -103,8 +84,48 @@
 #endif
 
 
-#include "deque/iterator_specification.inc"
-#include "deque/reverse_iterator_specification.inc"
+   type __deque_iterator__
+      private
+
+      type(__deque), pointer :: deque
+      integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+
+   contains
+
+   end type __deque_iterator__
+
+
+   ! Non type-bound functions
+
+   ! Relational operators
+   interface operator(==)
+      module procedure __MANGLE(iter_equal)
+   end interface operator(==)
+
+   interface operator(/=)
+      module procedure __MANGLE(iter_not_equal)
+   end interface operator(/=)
+
+type __deque_riterator__
+private
+
+type(__deque), pointer :: deque
+integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+
+contains
+
+end type __deque_riterator__
+
+
+! Relational operators
+interface operator(==)
+module procedure __MANGLE(riter_equal)
+end interface operator(==)
+
+interface operator(/=)
+module procedure __MANGLE(riter_not_equal)
+end interface operator(/=)
+
 
 #ifdef __deque_iterator__
 #    undef __deque_iterator__
