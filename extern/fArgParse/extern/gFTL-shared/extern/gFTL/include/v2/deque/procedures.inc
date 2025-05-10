@@ -1,16 +1,8 @@
 #define __guard __deque_guard
 
-#if defined(__deque_iterator)
-#    define __deque_iterator__ __deque_iterator
-#else
-#    define __deque_iterator__ DequeIterator
-#endif
+#define __deque_iterator__ DequeIterator
 
-#if defined(__deque_riterator)
-#    define __deque_riterator__ __deque_riterator
-#else
-#    define __deque_riterator__ DequeRIterator
-#endif
+#define __deque_riterator__ DequeRIterator
 
    function __MANGLE(new_deque_range)(first, last) result(v)
       type (__deque) :: v
@@ -56,16 +48,5 @@
 
       end function __MANGLE(riter_not_equal)
 
-
-
-#if defined(__deque_iterator__)
-#    undef __deque_iterator__
-#endif
-
-#if defined(__deque_riterator__)
-#    undef __deque_riterator__
-#endif
-
 ! undef internal template parameters
 #undef __guard
-!#include "parameters/T/undef_internal.inc"

@@ -1,16 +1,7 @@
 #define __guard __deque_guard
 
-#ifdef __deque_iterator
-#    define __deque_iterator__ __deque_iterator
-#else
-#    define __deque_iterator__ DequeIterator
-#endif
-
-#ifdef __deque_riterator
-#    define __deque_riterator__ __deque_riterator
-#else
-#    define __deque_riterator__ DequeRIterator
-#endif
+#define __deque_iterator__ DequeIterator
+#define __deque_riterator__ DequeRIterator
 
    ! Structure constructors
    interface __deque
@@ -69,14 +60,5 @@ module procedure __MANGLE(riter_not_equal)
 end interface operator(/=)
 
 
-#ifdef __deque_iterator__
-#    undef __deque_iterator__
-#endif
-
-#ifdef __deque_riterator__
-#    undef __deque_riterator__
-#endif
-
 ! undef internal template parameters
 #undef __guard
-!#include "parameters/T/undef_internal.inc"
