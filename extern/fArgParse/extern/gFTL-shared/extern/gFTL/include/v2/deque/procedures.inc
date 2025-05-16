@@ -43,12 +43,6 @@
    end function __MANGLE(at_default)
 
 
-   function __MANGLE(of_size_kind)(this, i) result(res)
-      class(__deque), target, intent(in) :: this
-      integer(kind=GFTL_SIZE_KIND), intent(in) :: i
-      __T_declare_result__, pointer :: res
-   end function __MANGLE(of_size_kind)
-
    function __MANGLE(of_default)(this, i) result(res)
       class(__deque), target, intent(in) :: this
       integer, intent(in) :: i

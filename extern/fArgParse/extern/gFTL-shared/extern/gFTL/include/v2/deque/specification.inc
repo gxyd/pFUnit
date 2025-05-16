@@ -49,14 +49,10 @@
       procedure :: of_default => __MANGLE(of_default)
       generic :: at => at_default
       generic :: at => of_default
-      !generic :: of => of_default
 
 #ifndef  __gftl_disable_index_kind_overload
       procedure :: at_size_kind => __MANGLE(at_size_kind)
-      procedure :: of_size_kind => __MANGLE(of_size_kind)
       generic :: at => at_size_kind
-      generic :: at => of_size_kind
-      !generic :: of => of_size_kind
 #endif
 
 
