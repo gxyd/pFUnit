@@ -1,21 +1,25 @@
-import re
+from pathlib import Path
 
-def remove_fortran_comments(input_file, output_file=None):
-    cleaned_lines = []
+def remove_full_line_comments(filepath: str):
+    path = Path(filepath)
 
-    with open(input_file, 'r') as f:
-        for line in f:
-            stripped = line.lstrip()
-            if stripped.startswith('!'):
-                continue  # full-line comment, skip
-            # Remove inline comment: everything after first "!" (if not in a string literal)
-            line_no_inline_comment = re.split(r'(?<!["\'])!', line)[0].rstrip()
-            if line_no_inline_comment.strip():  # skip if becomes empty
-                cleaned_lines.append(line_no_inline_comment + '\n')
+    with path.open('r', encoding='utf-8') as f:
+        lines = f.readlines()
 
-    # Write result
-    target_file = output_file if output_file else input_file
-    with open(target_file, 'w') as f:
+    cleaned_lines = [
+        line for line in lines
+        if not line.lstrip().startswith('!')
+    ]
+
+    with path.open('w', encoding='utf-8') as f:
         f.writelines(cleaned_lines)
 
-remove_fortran_comments("new.f90")
+    print(f"Cleaned: {filepath}")
+
+# Example usage
+remove_full_line_comments("./extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/stack/procedures.inc")
+remove_full_line_comments("./extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/deque/iterator_procedures.inc")
+remove_full_line_comments("./extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/deque/procedures.inc")
+remove_full_line_comments("./extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/deque/specification.inc")
+remove_full_line_comments("./extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/queue/procedures.inc")
+remove_full_line_comments("./extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/stack/procedures.inc")
