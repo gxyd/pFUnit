@@ -18,13 +18,8 @@
 #include "parameters/T/define_derived_macros.inc"
    
    interface __deque
-      module procedure __MANGLE(new_deque_empty)
 #ifndef  __gftl_disable_index_kind_overload
-      module procedure __MANGLE(new_deque_fill_size_kind)
 #endif
-      module procedure __MANGLE(new_deque_fill_default)
-      module procedure __MANGLE(new_deque_range)
-      module procedure __MANGLE(new_deque_copy)
 
    end interface __deque
 
@@ -49,10 +44,6 @@
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
 
-      procedure :: size => __MANGLE(size)
-      procedure, nopass :: max_size => __MANGLE(max_size)
-      procedure :: capacity => __MANGLE(capacity)
-      procedure :: empty => __MANGLE(empty)
 
       procedure :: at_default => __MANGLE(at_default)
       procedure :: of_default => __MANGLE(of_default)
@@ -68,8 +59,6 @@
       generic :: of => of_size_kind
 #endif
 
-      procedure :: back => __MANGLE(back)
-      procedure :: front => __MANGLE(front)
 
 #ifndef  __gftl_disable_index_kind_overload
 #endif
@@ -88,7 +77,6 @@
 #ifdef __T_EQ__
 #endif
 
-      procedure, private :: idx => __MANGLE(idx)
    end type __deque
 
 
