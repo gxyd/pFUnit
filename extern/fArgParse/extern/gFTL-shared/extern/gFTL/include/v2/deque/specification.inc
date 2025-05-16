@@ -16,11 +16,8 @@
 #endif
 
 #include "parameters/T/define_derived_macros.inc"
-   
-   interface __deque
-#ifndef  __gftl_disable_index_kind_overload
-#endif
 
+   interface __deque
    end interface __deque
 
    type :: __MANGLE(wrapper)
@@ -43,46 +40,14 @@
       integer(kind=GFTL_SIZE_KIND) :: front_ = -1
       integer(kind=GFTL_SIZE_KIND) :: back_ = 0
    contains
-
-
       procedure :: at_default => __MANGLE(at_default)
       procedure :: of_default => __MANGLE(of_default)
       generic :: at => at_default
       generic :: at => of_default
 
-#ifndef  __gftl_disable_index_kind_overload
       procedure :: at_size_kind => __MANGLE(at_size_kind)
       generic :: at => at_size_kind
-#endif
-
-
-#ifndef  __gftl_disable_index_kind_overload
-#endif
-
-
-
-#ifndef  __gftl_disable_index_kind_overload
-#endif
-
-
-
-
-
-
-
-#ifdef __T_EQ__
-#endif
-
    end type __deque
-
-
-
-
-#if defined(__T_EQ__) || defined(__T_LT__)
-
-#endif
-
-      
 
 #include "deque/iterator_specification.inc"
 #include "deque/reverse_iterator_specification.inc"

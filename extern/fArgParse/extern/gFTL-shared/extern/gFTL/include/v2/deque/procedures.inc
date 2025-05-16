@@ -49,9 +49,6 @@
       __T_declare_result__, pointer :: res
    end function __MANGLE(of_default)
 
-#include "deque/iterator_procedures.inc"
-#include "deque/reverse_iterator_procedures.inc"
-
 #if defined(__deque_iterator__)
 #    undef __deque_iterator__
 #endif
@@ -68,5 +65,3 @@
 
 #undef __guard
 #include "parameters/T/undef_internal.inc"
-
-
