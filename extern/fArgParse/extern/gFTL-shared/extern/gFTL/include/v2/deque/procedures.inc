@@ -337,45 +337,45 @@
       integer(kind=GFTL_SIZE_KIND) :: i, ii
 
       ! Same size?
-      equal = (lhs%front_ == rhs%front_) .and. (lhs%back_ == rhs%back_)
-
-      if (equal) then ! Same elements?
-         
-         do i = 1, lhs%size_
-            ii = lhs%idx(i)
-
-            associate ( &
-                 item_l => lhs%buckets(ii)%ptr%bucket_items%item, &
-                 item_r => rhs%buckets(ii)%ptr%bucket_items%item)
-#ifdef __T_EQ__
-#if __T_rank > 0 && !defined(__T_shape)
-              if (any(shape(item_l) /= shape(item_r))) then
-               equal = .false.
-               return
-            endif
-#endif
-            if (.not. (__T_EQ__(item_l, item_r))) then
-               equal = .false.
-               return
-            end if
-#else
-! then must have a less-than operator
-            if ((__T_LT__(item_l,item_r))) then
-               equal = .false.
-               return
-            elseif ((__T_LT__(item_r,item_l))) then
-               equal = .false.
-               return
-            end if
-#endif
-            end associate
-         end do
-
-         ! all elements equal
-         equal = .true. ! redundant
-      endif
-
-      return
+!      equal = (lhs%front_ == rhs%front_) .and. (lhs%back_ == rhs%back_)
+!
+!      if (equal) then ! Same elements?
+!         
+!         do i = 1, lhs%size_
+!            ii = lhs%idx(i)
+!
+!            associate ( &
+!                 item_l => lhs%buckets(ii)%ptr%bucket_items%item, &
+!                 item_r => rhs%buckets(ii)%ptr%bucket_items%item)
+!#ifdef __T_EQ__
+!#if __T_rank > 0 && !defined(__T_shape)
+!              if (any(shape(item_l) /= shape(item_r))) then
+!               equal = .false.
+!               return
+!            endif
+!#endif
+!            if (.not. (__T_EQ__(item_l, item_r))) then
+!               equal = .false.
+!               return
+!            end if
+!#else
+!! then must have a less-than operator
+!            if ((__T_LT__(item_l,item_r))) then
+!               equal = .false.
+!               return
+!            elseif ((__T_LT__(item_r,item_l))) then
+!               equal = .false.
+!               return
+!            end if
+!#endif
+!            end associate
+!         end do
+!
+!         ! all elements equal
+!         equal = .true. ! redundant
+!      endif
+!
+!      return
    end function __MANGLE(equal)
 
    ! =======================
@@ -386,9 +386,9 @@
       type(__deque), intent(in) :: lhs
       type(__deque), intent(in) :: rhs
 
-      not_equal = .not. (lhs == rhs)
-
-      return
+!      not_equal = .not. (lhs == rhs)
+!
+!      return
    end function __MANGLE(not_equal)
 
 #endif
@@ -408,24 +408,24 @@
       integer(kind=GFTL_SIZE_KIND) :: i, n
       __T_declare_result__, pointer :: lhs_i, rhs_i
       
-      n = min(lhs%size(), rhs%size())
-      do i = 1, n
-         
-         lhs_i => lhs%of(i)
-         rhs_i => rhs%of(i)
-
-         if (__T_LT__(lhs_i, rhs_i)) then
-            less_than = .true.
-            return
-         else if (__T_LT__(rhs_i,lhs_i)) then
-            less_than = .false.
-            return
-         endif
-      end do
-
-      less_than = (n < rhs%size())
-
-      return
+!      n = min(lhs%size(), rhs%size())
+!      do i = 1, n
+!         
+!         lhs_i => lhs%of(i)
+!         rhs_i => rhs%of(i)
+!
+!         if (__T_LT__(lhs_i, rhs_i)) then
+!            less_than = .true.
+!            return
+!         else if (__T_LT__(rhs_i,lhs_i)) then
+!            less_than = .false.
+!            return
+!         endif
+!      end do
+!
+!      less_than = (n < rhs%size())
+!
+!      return
    end function __MANGLE(less_than)
 
    impure elemental function __MANGLE(greater_than_or_equal_to)(lhs, rhs) &
@@ -434,9 +434,9 @@
       type (__deque), intent(in) :: lhs
       type (__deque), intent(in) :: rhs
 
-      greater_than_or_equal_to = .not. (lhs < rhs)
-
-      return
+!      greater_than_or_equal_to = .not. (lhs < rhs)
+!
+!      return
    end function __MANGLE(greater_than_or_equal_to)
 
 
@@ -445,9 +445,9 @@
       type (__deque), intent(in) :: lhs
       type (__deque), intent(in) :: rhs
 
-      greater_than = (rhs < lhs)
-
-      return
+!      greater_than = (rhs < lhs)
+!
+!      return
    end function __MANGLE(greater_than)
 
 
@@ -457,9 +457,9 @@
       type (__deque), intent(in) :: lhs
       type (__deque), intent(in) :: rhs
 
-      less_than_or_equal_to = .not. (rhs < lhs)
-
-      return
+!      less_than_or_equal_to = .not. (rhs < lhs)
+!
+!      return
    end function __MANGLE(less_than_or_equal_to)
 
 
@@ -476,21 +476,21 @@
       type (KeywordEnforcer), optional, intent(in) :: unused
       integer, optional, intent(out) :: rc
 
-      __UNUSED_DUMMY(unused)
-
-      call this%grow_to(this%size_+1)
-
-      if (this%back_ == this%capacity()) then
-         this%back_ = 1
-      else
-         this%back_ = this%back_ + 1
-      end if
-
-      ! Special case: first element also changes front
-      if (this%size_ == 0) this%front_ = this%back_
-      call this%resize(this%size_+1, value=value, rc=rc)
-
-      return
+!      __UNUSED_DUMMY(unused)
+!
+!      call this%grow_to(this%size_+1)
+!
+!      if (this%back_ == this%capacity()) then
+!         this%back_ = 1
+!      else
+!         this%back_ = this%back_ + 1
+!      end if
+!
+!      ! Special case: first element also changes front
+!      if (this%size_ == 0) this%front_ = this%back_
+!      call this%resize(this%size_+1, value=value, rc=rc)
+!
+!      return
 
    end subroutine __MANGLE(push_back)
 
