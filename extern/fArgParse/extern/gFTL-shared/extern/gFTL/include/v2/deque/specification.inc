@@ -100,99 +100,99 @@
       procedure :: back => __MANGLE(back)
       procedure :: front => __MANGLE(front)
 
-      procedure :: set_size_kind => __MANGLE(set_size_kind)
-      procedure :: set_default => __MANGLE(set_default)
-      generic :: set => set_default
+      !procedure :: set_size_kind => __MANGLE(set_size_kind)
+      !procedure :: set_default => __MANGLE(set_default)
+      !generic :: set => set_default
 #ifndef  __gftl_disable_index_kind_overload
-      generic :: set => set_size_kind
+      !generic :: set => set_size_kind
 #endif
 
-      procedure :: push_back => __MANGLE(push_back)
-      procedure :: pop_back => __MANGLE(pop_back)
+      !procedure :: push_back => __MANGLE(push_back)
+      !procedure :: pop_back => __MANGLE(pop_back)
 
       ! deques are not vectors ...
-      procedure :: push_front => __MANGLE(push_front)
-      procedure :: pop_front => __MANGLE(pop_front)
+      !procedure :: push_front => __MANGLE(push_front)
+      !procedure :: pop_front => __MANGLE(pop_front)
 
-      procedure :: resize_size_kind => __MANGLE(resize_size_kind)
-      procedure :: resize_default => __MANGLE(resize_default)
-      generic :: resize => resize_default
+      !procedure :: resize_size_kind => __MANGLE(resize_size_kind)
+      !procedure :: resize_default => __MANGLE(resize_default)
+      !generic :: resize => resize_default
 #ifndef  __gftl_disable_index_kind_overload
-      generic :: resize => resize_size_kind
+      !generic :: resize => resize_size_kind
 #endif
 
-      procedure :: clear => __MANGLE(clear)
-      procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
+      !procedure :: clear => __MANGLE(clear)
+      !procedure :: shrink_to_fit => __MANGLE(shrink_to_fit)
 
-      procedure :: erase_one => __MANGLE(erase_one)
-      procedure :: erase_range => __MANGLE(erase_range)
-      generic :: erase => erase_one
-      generic :: erase => erase_range
+      !procedure :: erase_one => __MANGLE(erase_one)
+      !procedure :: erase_range => __MANGLE(erase_range)
+      !generic :: erase => erase_one
+      !generic :: erase => erase_range
 
-      procedure :: swap => __MANGLE(swap)
-      procedure :: reset => __MANGLE(reset)
+      !procedure :: swap => __MANGLE(swap)
+      !procedure :: reset => __MANGLE(reset)
 
-      procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
-      procedure :: reserve_default => __MANGLE(reserve_default)
-      generic :: reserve => reserve_default
-#ifndef  __gftl_disable_index_kind_overload
-      generic :: reserve => reserve_size_kind
-#endif
+      !procedure :: reserve_size_kind => __MANGLE(reserve_size_kind)
+      !procedure :: reserve_default => __MANGLE(reserve_default)
+      !generic :: reserve => reserve_default
+!#ifndef  __gftl_disable_index_kind_overload
+!      generic :: reserve => reserve_size_kind
+!#endif
 
 
       ! Factory methods for iterators
-      procedure :: begin => __MANGLE(begin)
-      procedure :: end => __MANGLE(end)
-      procedure :: rbegin => __MANGLE(rbegin)
-      procedure :: rend => __MANGLE(rend)
+      !procedure :: begin => __MANGLE(begin)
+      !procedure :: end => __MANGLE(end)
+      !procedure :: rbegin => __MANGLE(rbegin)
+      !procedure :: rend => __MANGLE(rend)
 
       ! No analog for the following in STL, but it seems very convenient.
 #ifdef __T_EQ__
-      procedure :: get_index => __MANGLE(get_index)
+      !procedure :: get_index => __MANGLE(get_index)
 #endif
       ! I/O
-      procedure :: write_formatted => __MANGLE(write_formatted)
-      generic :: write(formatted) => write_formatted
+      !procedure :: write_formatted => __MANGLE(write_formatted)
+      !generic :: write(formatted) => write_formatted
 
       ! private helper procedures
-      procedure, private :: set_capacity => __MANGLE(set_capacity)
-      procedure, private :: grow_to => __MANGLE(grow_to)
-      procedure, private :: downsize=>__MANGLE(downsize)
+      !procedure, private :: set_capacity => __MANGLE(set_capacity)
+      !procedure, private :: grow_to => __MANGLE(grow_to)
+      !procedure, private :: downsize=>__MANGLE(downsize)
       procedure, private :: idx => __MANGLE(idx)
-      procedure, private :: bucket_index => __MANGLE(bucket_index)
-      procedure, private :: bucket_offset => __MANGLE(bucket_offset)
+      !procedure, private :: bucket_index => __MANGLE(bucket_index)
+      !procedure, private :: bucket_offset => __MANGLE(bucket_offset)
    end type __deque
 
 
-   interface swap
-      module procedure __MANGLE(swap)
-   end interface swap
+   !interface swap
+   !   module procedure __MANGLE(swap)
+   !end interface swap
 
 
 #if defined(__T_EQ__) || defined(__T_LT__)
-   interface operator(==)
-      module procedure __MANGLE(equal)
-   end interface operator(==)
-   interface operator(/=)
-      module procedure __MANGLE(not_equal)
-   end interface operator(/=)
+   !interface operator(==)
+   !   module procedure __MANGLE(equal)
+   !end interface operator(==)
+   !interface operator(/=)
+   !   module procedure __MANGLE(not_equal)
+   !end interface operator(/=)
 
 #endif
 
-#ifdef __T_LT__
-   interface operator(<)
-      module procedure __MANGLE(less_than)
-   end interface
-   interface operator(>)
-      module procedure __MANGLE(greater_than)
-   end interface
-   interface operator(<=)
-      module procedure __MANGLE(less_than_or_equal_to)
-   end interface
-   interface operator(>=)
-      module procedure __MANGLE(greater_than_or_equal_to)
-   end interface
-#endif
+!#ifdef __T_LT__
+!   interface operator(<)
+!      module procedure __MANGLE(less_than)
+!   end interface
+!   interface operator(>)
+!      module procedure __MANGLE(greater_than)
+!   end interface
+!   interface operator(<=)
+!      module procedure __MANGLE(less_than_or_equal_to)
+!   end interface
+!   interface operator(>=)
+!      module procedure __MANGLE(greater_than_or_equal_to)
+!   end interface
+!#endif
       
 
 #include "deque/iterator_specification.inc"

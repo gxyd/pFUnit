@@ -24,7 +24,7 @@
       type (__queue) :: q
       logical, parameter :: flag = .false.
 
-      if (flag) print*,shape(q) ! avoid warning about unused return value
+      !if (flag) print*,shape(q) ! avoid warning about unused return value
 
       return
    end function __MANGLE(new_queue_empty)
@@ -33,9 +33,9 @@
       type (__queue) :: q
       type(__queue_container_type), intent(in) :: container
 
-      q%container = container
+      !q%container = container
 
-      return
+      !return
    end function __MANGLE(new_queue_container)
 
 
@@ -46,8 +46,8 @@
 
       integer(kind=GFTL_SIZE_KIND) :: i
 
-      q%container = x%container
-      return
+      !q%container = x%container
+      !return
    end function __MANGLE(new_queue_copy)
 
 
@@ -59,9 +59,9 @@
       class(__queue), intent(in) :: this
       integer(kind=GFTL_SIZE_KIND) :: res
 
-      res = this%container%size()
+      !res = this%container%size()
 
-      return
+      !return
    end function __MANGLE(size)
 
    
@@ -72,7 +72,7 @@
    pure logical function __MANGLE(empty)(this) result(empty)
       class(__queue), intent(in) :: this
 
-      empty = this%container%empty()
+      !empty = this%container%empty()
 
    end function __MANGLE(empty)
 
@@ -84,9 +84,9 @@
       class(__queue), target, intent(in) :: this
       __T_declare_result__, pointer :: res
 
-      res => this%container%back()
+      !res => this%container%back()
 
-      return
+      !return
    end function __MANGLE(back)
 
    ! =======================
@@ -96,9 +96,9 @@
       class(__queue), target, intent(in) :: this
       __T_declare_result__, pointer :: res
 
-      res => this%container%front()
+      !res => this%container%front()
 
-      return
+      !return
    end function __MANGLE(front)
 
    ! =======================
@@ -110,10 +110,10 @@
       type (KeywordEnforcer), optional, intent(in) :: unused
       integer, optional, intent(out) :: rc
 
-      __UNUSED_DUMMY(unused)
+      !__UNUSED_DUMMY(unused)
 
 
-      call this%container%push_back(value, rc=rc)
+      !call this%container%push_back(value, rc=rc)
 
    end subroutine __MANGLE(push)
 
@@ -124,9 +124,9 @@
    subroutine __MANGLE(pop)(this)
       class(__queue), intent(inout) :: this
 
-      call this%container%pop_front()
+      !call this%container%pop_front()
 
-      return
+      !return
    end subroutine __MANGLE(pop)
 
 
@@ -140,9 +140,9 @@
       type(__queue), intent(in) :: rhs
 
 
-      equal = (lhs%container == rhs%container)
+      !equal = (lhs%container == rhs%container)
 
-      return
+      !return
    end function __MANGLE(equal)
 
    ! =======================
@@ -153,9 +153,9 @@
       type(__queue), intent(in) :: lhs
       type(__queue), intent(in) :: rhs
 
-      not_equal = .not. (lhs == rhs)
+      !not_equal = .not. (lhs == rhs)
 
-      return
+      !return
    end function __MANGLE(not_equal)
 
 #endif
@@ -172,9 +172,9 @@
       type (__queue), intent(in) :: lhs
       type (__queue), intent(in) :: rhs
 
-      less_than = (lhs%container < rhs%container)
+      !less_than = (lhs%container < rhs%container)
 
-      return
+      !return
    end function __MANGLE(less_than)
 
    impure elemental function __MANGLE(greater_than_or_equal_to)(lhs, rhs) &
@@ -183,9 +183,9 @@
       type (__queue), intent(in) :: lhs
       type (__queue), intent(in) :: rhs
 
-      greater_than_or_equal_to = .not. (lhs < rhs)
+      !greater_than_or_equal_to = .not. (lhs < rhs)
 
-      return
+      !return
    end function __MANGLE(greater_than_or_equal_to)
 
 
@@ -194,9 +194,9 @@
       type (__queue), intent(in) :: lhs
       type (__queue), intent(in) :: rhs
 
-      greater_than = (rhs < lhs)
+      !greater_than = (rhs < lhs)
 
-      return
+      !return
    end function __MANGLE(greater_than)
 
 
@@ -206,9 +206,9 @@
       type (__queue), intent(in) :: lhs
       type (__queue), intent(in) :: rhs
 
-      less_than_or_equal_to = .not. (rhs < lhs)
+      !less_than_or_equal_to = .not. (rhs < lhs)
 
-      return
+      !return
    end function __MANGLE(less_than_or_equal_to)
 
 
@@ -223,9 +223,9 @@
       type(__queue), target, intent(inout) :: x
 
 
-      call this%container%swap(x%container)
+      !call this%container%swap(x%container)
       
-      return
+      !return
    end subroutine __MANGLE(swap)
 
    
@@ -237,15 +237,15 @@
     integer, intent(out) :: iostat
     character(*), intent(inout) :: iomsg
 
-    iostat = 0
-
-#ifdef __T_name__
-    write(unit,'(a)') 'Queue<' // __T_declare_string__ // '>'
-#else
-    write(unit,'(a)') 'Queue<' // 'unknown' // '>'
-#endif
-    write(unit,'(a)') new_line('a')
-    write(unit,'(4x,a10,1x,i0)') 'size: ',this%size()
+!    iostat = 0
+!
+!#ifdef __T_name__
+!    write(unit,'(a)') 'Queue<' // __T_declare_string__ // '>'
+!#else
+!    write(unit,'(a)') 'Queue<' // 'unknown' // '>'
+!#endif
+!    write(unit,'(a)') new_line('a')
+!    write(unit,'(4x,a10,1x,i0)') 'size: ',this%size()
    end subroutine __MANGLE(write_formatted)
 
 

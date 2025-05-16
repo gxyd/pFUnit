@@ -24,18 +24,18 @@
       type (__stack) :: q
       logical, parameter :: flag = .false.
 
-      if (flag) print*,shape(q) ! avoid warning about unused return value
+      !if (flag) print*,shape(q) ! avoid warning about unused return value
 
-      return
+      !return
    end function __MANGLE(new_stack_empty)
 
    function __MANGLE(new_stack_container)(container) result(q)
       type (__stack) :: q
       type(__stack_container_type), intent(in) :: container
 
-      q%container = container
+      !q%container = container
 
-      return
+      !return
    end function __MANGLE(new_stack_container)
 
 
@@ -46,8 +46,8 @@
 
       integer(kind=GFTL_SIZE_KIND) :: i
 
-      q%container = x%container
-      return
+      !q%container = x%container
+      !return
    end function __MANGLE(new_stack_copy)
 
 
@@ -59,9 +59,9 @@
       class(__stack), intent(in) :: this
       integer(kind=GFTL_SIZE_KIND) :: res
 
-      res = this%container%size()
+      !res = this%container%size()
 
-      return
+      !return
    end function __MANGLE(size)
 
    
@@ -72,7 +72,7 @@
    pure logical function __MANGLE(empty)(this) result(empty)
       class(__stack), intent(in) :: this
 
-      empty = this%container%empty()
+      !empty = this%container%empty()
 
    end function __MANGLE(empty)
 
@@ -84,7 +84,7 @@
       class(__stack), target, intent(in) :: this
       __T_declare_result__, pointer :: res
 
-      res => this%container%back()
+      !res => this%container%back()
 
       return
    end function __MANGLE(top)
@@ -99,10 +99,10 @@
       type (KeywordEnforcer), optional, intent(in) :: unused
       integer, optional, intent(out) :: rc
 
-      __UNUSED_DUMMY(unused)
+      !__UNUSED_DUMMY(unused)
 
 
-      call this%container%push_back(value, rc=rc)
+      !call this%container%push_back(value, rc=rc)
 
    end subroutine __MANGLE(push)
 
@@ -113,9 +113,9 @@
    subroutine __MANGLE(pop)(this)
       class(__stack), intent(inout) :: this
 
-      call this%container%pop_back()
+      !call this%container%pop_back()
 
-      return
+      !return
    end subroutine __MANGLE(pop)
 
 
@@ -129,7 +129,7 @@
       type(__stack), intent(in) :: rhs
 
 
-      equal = (lhs%container == rhs%container)
+      !equal = (lhs%container == rhs%container)
 
       return
    end function __MANGLE(equal)
@@ -142,7 +142,7 @@
       type(__stack), intent(in) :: lhs
       type(__stack), intent(in) :: rhs
 
-      not_equal = .not. (lhs == rhs)
+      !not_equal = .not. (lhs == rhs)
 
       return
    end function __MANGLE(not_equal)
@@ -161,9 +161,9 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      less_than = (lhs%container < rhs%container)
+      !less_than = (lhs%container < rhs%container)
 
-      return
+      !return
    end function __MANGLE(less_than)
 
    impure elemental function __MANGLE(greater_than_or_equal_to)(lhs, rhs) &
@@ -172,9 +172,9 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      greater_than_or_equal_to = .not. (lhs < rhs)
+      !greater_than_or_equal_to = .not. (lhs < rhs)
 
-      return
+      !return
    end function __MANGLE(greater_than_or_equal_to)
 
 
@@ -183,9 +183,9 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      greater_than = (rhs < lhs)
+      !greater_than = (rhs < lhs)
 
-      return
+      !return
    end function __MANGLE(greater_than)
 
 
@@ -195,9 +195,9 @@
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
 
-      less_than_or_equal_to = .not. (rhs < lhs)
+      !less_than_or_equal_to = .not. (rhs < lhs)
 
-      return
+      !return
    end function __MANGLE(less_than_or_equal_to)
 
 
@@ -212,9 +212,9 @@
       type(__stack), target, intent(inout) :: x
 
 
-      call this%container%swap(x%container)
+      !call this%container%swap(x%container)
       
-      return
+      !return
    end subroutine __MANGLE(swap)
 
    
@@ -226,15 +226,15 @@
     integer, intent(out) :: iostat
     character(*), intent(inout) :: iomsg
 
-    iostat = 0
-
-#ifdef __T_name__
-    write(unit,'(a)') 'Stack<' // __T_declare_string__ // '>'
-#else
-    write(unit,'(a)') 'Stack<' // 'unknown' // '>'
-#endif
-    write(unit,'(a)') new_line('a')
-    write(unit,'(4x,a10,1x,i0)') 'size: ',this%size()
+!    iostat = 0
+!
+!#ifdef __T_name__
+!    write(unit,'(a)') 'Stack<' // __T_declare_string__ // '>'
+!#else
+!    write(unit,'(a)') 'Stack<' // 'unknown' // '>'
+!#endif
+!    write(unit,'(a)') new_line('a')
+!    write(unit,'(4x,a10,1x,i0)') 'size: ',this%size()
    end subroutine __MANGLE(write_formatted)
 
 
