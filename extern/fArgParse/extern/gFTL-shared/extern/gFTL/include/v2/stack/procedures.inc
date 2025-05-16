@@ -141,10 +141,6 @@
       logical :: not_equal
       type(__stack), intent(in) :: lhs
       type(__stack), intent(in) :: rhs
-
-      !not_equal = .not. (lhs == rhs)
-
-      return
    end function __MANGLE(not_equal)
 
 #endif
@@ -160,10 +156,6 @@
       logical :: less_than
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
-
-      !less_than = (lhs%container < rhs%container)
-
-      !return
    end function __MANGLE(less_than)
 
    impure elemental function __MANGLE(greater_than_or_equal_to)(lhs, rhs) &
@@ -171,10 +163,6 @@
       logical :: greater_than_or_equal_to
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
-
-      !greater_than_or_equal_to = .not. (lhs < rhs)
-
-      !return
    end function __MANGLE(greater_than_or_equal_to)
 
 
@@ -182,10 +170,6 @@
       logical :: greater_than
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
-
-      !greater_than = (rhs < lhs)
-
-      !return
    end function __MANGLE(greater_than)
 
 
@@ -194,10 +178,6 @@
       logical :: less_than_or_equal_to
       type (__stack), intent(in) :: lhs
       type (__stack), intent(in) :: rhs
-
-      !less_than_or_equal_to = .not. (rhs < lhs)
-
-      !return
    end function __MANGLE(less_than_or_equal_to)
 
 
@@ -210,11 +190,6 @@
    subroutine __MANGLE(swap)(this, x)
       class(__stack), target, intent(inout) :: this
       type(__stack), target, intent(inout) :: x
-
-
-      !call this%container%swap(x%container)
-      
-      !return
    end subroutine __MANGLE(swap)
 
    
@@ -225,16 +200,6 @@
     integer, intent(in) :: v_list(:)
     integer, intent(out) :: iostat
     character(*), intent(inout) :: iomsg
-
-!    iostat = 0
-!
-!#ifdef __T_name__
-!    write(unit,'(a)') 'Stack<' // __T_declare_string__ // '>'
-!#else
-!    write(unit,'(a)') 'Stack<' // 'unknown' // '>'
-!#endif
-!    write(unit,'(a)') new_line('a')
-!    write(unit,'(4x,a10,1x,i0)') 'size: ',this%size()
    end subroutine __MANGLE(write_formatted)
 
 
