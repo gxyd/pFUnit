@@ -4,17 +4,17 @@
    public :: __deque_riterator
 
    ! Non type-bound procedures
-   public :: swap
+   !public :: swap
 
    ! Iterator functions
-   public :: advance
-   public :: begin
-   public :: distance
-   public :: end
-   public :: next
-   public :: prev
-   public :: operator(+)
-   public :: operator(-)
+   !public :: advance
+   !public :: begin
+   !public :: distance
+   !public :: end
+   !public :: next
+   !public :: prev
+   !public :: operator(+)
+   !public :: operator(-)
 
 
    ! Iterator and possibly container functions:
@@ -22,11 +22,11 @@
    ! May not also be defined for the container itself depending
    ! on properties of parameter T.
 
-   public :: operator(==)
-   public :: operator(/=)
+   !public :: operator(==)
+   !public :: operator(/=)
 
-   public :: operator(<)
-   public :: operator(>)
-   public :: operator(<=)
-   public :: operator(>=)
+   !public :: operator(<)
+   !public :: operator(>)
+   !public :: operator(<=)
+   !public :: operator(>=)
 

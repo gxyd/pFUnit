@@ -23,30 +23,6 @@
 
 #include "parameters/T/define_derived_macros.inc"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    function __MANGLE(at_size_kind)(this, i, rc) result(res)
       class(__deque), target, intent(in) :: this
       integer(KIND=GFTL_SIZE_KIND), intent(in) :: i
@@ -78,11 +54,6 @@
       integer, intent(in) :: i
       __T_declare_result__, pointer :: res
    end function __MANGLE(of_default)
-
-
-
-
-
 
 #include "deque/iterator_procedures.inc"
 #include "deque/reverse_iterator_procedures.inc"
