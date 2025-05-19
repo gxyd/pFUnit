@@ -49,8 +49,17 @@
       generic :: at => at_size_kind
    end type __deque
 
-#include "deque/iterator_specification.inc"
-#include "deque/reverse_iterator_specification.inc"
+type __deque_iterator__
+   private
+   type(__deque), pointer :: deque
+   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+end type __deque_iterator__
+
+type __deque_riterator__
+   private
+   type(__deque), pointer :: deque
+   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+end type __deque_riterator__
 
 #ifdef __deque_iterator__
 #    undef __deque_iterator__
