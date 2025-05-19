@@ -24,51 +24,16 @@ end type __deque
 #define __T T
 #define __guard __deque_guard
 
-#define __T_kind__  1 << (__T & 07)
+!#define __T_kind__  1 << (__T & 07)
+!
+!#define __T_polymorphic__
+!#define __T_type__ *
+!#if !defined(__T_default__)
+!#    define __T_default_scalar__ NO_TYPE__
+!#endif
 
-#define __T_polymorphic__
-#define __T_type__ *
-#if !defined(__T_default__)
-#    define __T_default_scalar__ NO_TYPE__
-#endif
 
-
-#ifdef __T_KINDLEN
-#    define __T_KINDLEN__(context)  __T_KINDLEN(context)
-#else
-#    ifndef __T_KINDLEN__
-#        define __T_KINDLEN__(context)
-#    endif
-#endif
-
-#ifdef __T_kindlen_dummy
-#    define __T_kindlen_dummy__ __T_kindlen_dummy
-#else
-#    define __T_kindlen_dummy__ __T_KINDLEN__(*)
-#endif
-
-#ifdef __T_kindlen_component
-#    define __T_kindlen_component__ __T_kindlen_component
-#else
-#    define __T_kindlen_component__ __T_KINDLEN__(:)
-#endif
-
-#ifdef __T_kindlen_string
-#    define __T_kindlen_string__ __T_kindlen_string
-#else
-#    ifndef __T_kindlen_string__
-#        define __T_kindlen_string__ ""
-#    endif
-#endif
-
-#define __T_dimension_component__
-#define __T_dimension_dummy__
-#define __T_dimension_string__ ""
-#ifdef __T_default_scalar__
-#    define __T_default__ __T_default_scalar__
-#endif
-
-#define __T_declare_result__ __IDENTITY(class(*))
+#define __T_declare_result__ class(*)
 #undef tmp
 
    function __MANGLE(at_size_kind)(this, i, rc) result(res)
