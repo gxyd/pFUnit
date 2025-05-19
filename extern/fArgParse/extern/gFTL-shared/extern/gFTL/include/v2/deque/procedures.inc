@@ -3,12 +3,6 @@
 #include "parameters/T/copy_deque_T_to_internal_T.inc"
 #define __guard __deque_guard
 
-#if defined(__deque_bucket_size)
-#    define __deque_bucket_size__ __deque_bucket_size
-#else
-#    define __deque_bucket_size__ 1
-#endif
-
 #include "parameters/T/define_derived_macros.inc"
 
    function __MANGLE(at_size_kind)(this, i, rc) result(res)
@@ -34,10 +28,6 @@
       integer, intent(in) :: i
       __T_declare_result__, pointer :: res
    end function __MANGLE(of_default)
-
-#if defined(__deque_bucket_size__)
-#    undef __deque_bucket_size__
-#endif
 
 #include "parameters/T/undef_derived_macros.inc"
 
