@@ -71,49 +71,6 @@ end type __deque
 #define __T_declare_result__ __IDENTITY(class(*))
 #undef tmp
 
-#ifdef __T_EQ
-#    define __T_EQ__(lhs,rhs) __T_EQ(lhs,rhs)
-#elif defined(__T_EQ_SCALAR__)
-#    if __T_rank == 0
-#        define __T_EQ__(lhs,rhs) __T_EQ_SCALAR__(lhs,rhs)
-#    elif defined(__T_shape)
-#        define __T_EQ__(lhs,rhs) all(__T_EQ_SCALAR__([lhs],[rhs]))
-#    else
-#        define __T_EQ__(lhs,rhs) all(shape(lhs)==shape(rhs)).and.all(reshape(lhs,[min(size(lhs),size(rhs))])==reshape(lhs,[min(size(lhs),size(rhs))]))
-#    endif
-#endif
-
-#ifdef __T_FREE
-#    define __T_FREE__(x)  __T_FREE(x)
-#else
-#    ifdef __T_allocatable__
-#        define __T_FREE__(x)  deallocate(x)
-#    else
-#        define __T_FREE__(x)
-#    endif
-#endif
-
-#ifdef __T_MOVE
-#    define  __T_MOVE__(lhs,rhs)  __T_MOVE(lhs,rhs)
-#else
-#    ifdef __T_allocatable__
-#        define  __T_MOVE__(lhs,rhs)  call move_alloc(from=rhs,to=lhs)
-#    else
-#        define  __T_MOVE__(lhs,rhs)  lhs=rhs
-#    endif
-#endif
-
-
-#ifdef __T_COPY
-#    define  __T_COPY__(lhs,rhs)  __T_COPY(lhs,rhs)
-#else
-#    if defined(__T_polymorphic__)
-#        define __T_COPY__(lhs,rhs) allocate(lhs, source=rhs)
-#    else
-#        define __T_COPY__(lhs,rhs) lhs=rhs
-#    endif
-#endif
-
    function __MANGLE(at_size_kind)(this, i, rc) result(res)
       class(__deque), target, intent(in) :: this
       integer(8), intent(in) :: i
