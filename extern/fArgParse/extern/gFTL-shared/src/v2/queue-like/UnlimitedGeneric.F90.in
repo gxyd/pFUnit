@@ -3,5 +3,5 @@ module gFTL2_Unlimited@Container@
 #define T __UNLIMITED_POLYMORPHIC
 #include "@container@/template.inc"
 #undef T
-  
+
 end module gFTL2_Unlimited@Container@
