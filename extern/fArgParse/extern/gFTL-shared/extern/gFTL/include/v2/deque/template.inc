@@ -6,4 +6,3 @@
    contains
 
 #include "deque/procedures.inc"
-#include "deque/tail.inc"

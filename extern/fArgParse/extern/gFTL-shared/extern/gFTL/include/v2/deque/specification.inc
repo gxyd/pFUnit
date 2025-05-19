@@ -3,17 +3,17 @@
 #include "parameters/T/copy_deque_T_to_internal_T.inc"
 #define __guard __deque_guard
 
-#ifdef __deque_iterator
-#    define __deque_iterator__ __deque_iterator
-#else
-#    define __deque_iterator__ DequeIterator
-#endif
+!#ifdef __deque_iterator
+!#    define __deque_iterator__ __deque_iterator
+!#else
+!#    define __deque_iterator__ DequeIterator
+!#endif
 
-#ifdef __deque_riterator
-#    define __deque_riterator__ __deque_riterator
-#else
-#    define __deque_riterator__ DequeRIterator
-#endif
+!#ifdef __deque_riterator
+!#    define __deque_riterator__ __deque_riterator
+!#else
+!#    define __deque_riterator__ DequeRIterator
+!#endif
 
 #include "parameters/T/define_derived_macros.inc"
 
@@ -49,21 +49,21 @@
       generic :: at => at_size_kind
    end type __deque
 
-type __deque_iterator__
-   private
-   type(__deque), pointer :: deque
-   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
-end type __deque_iterator__
-
-type __deque_riterator__
-   private
-   type(__deque), pointer :: deque
-   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
-end type __deque_riterator__
-
-#ifdef __deque_iterator__
-#    undef __deque_iterator__
-#endif
+!type __deque_iterator__
+!   private
+!   type(__deque), pointer :: deque
+!   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+!end type __deque_iterator__
+!
+!type __deque_riterator__
+!   private
+!   type(__deque), pointer :: deque
+!   integer(kind=__gftl_size_kind) :: current_index = -1 ! intentionally invalid value
+!end type __deque_riterator__
+!
+!#ifdef __deque_iterator__
+!#    undef __deque_iterator__
+!#endif
 
 #ifdef __deque_riterator__
 #    undef __deque_riterator__
