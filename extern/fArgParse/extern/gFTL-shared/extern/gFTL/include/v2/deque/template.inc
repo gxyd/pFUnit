@@ -24,15 +24,6 @@ end type __deque
 #define __T T
 #define __guard __deque_guard
 
-!#define __T_kind__  1 << (__T & 07)
-!
-!#define __T_polymorphic__
-!#define __T_type__ *
-!#if !defined(__T_default__)
-!#    define __T_default_scalar__ NO_TYPE__
-!#endif
-
-
 #define __T_declare_result__ class(*)
 #undef tmp
 
@@ -40,13 +31,13 @@ end type __deque
       class(__deque), target, intent(in) :: this
       integer(8), intent(in) :: i
       integer, intent(out) :: rc
-      __T_declare_result__, pointer :: res
+      class(*), pointer :: res
    end function __MANGLE(at_size_kind)
 
    function __MANGLE(at_default)(this, i, rc) result(res)
       class(__deque), target, intent(in) :: this
       integer, intent(in) :: i
-      __T_declare_result__, pointer :: res
+      class(*), pointer :: res
       integer, intent(out) :: rc
 
       res => this%at(int(i,8),rc)
@@ -57,7 +48,7 @@ end type __deque
    function __MANGLE(of_default)(this, i) result(res)
       class(__deque), target, intent(in) :: this
       integer, intent(in) :: i
-      __T_declare_result__, pointer :: res
+      class(*), pointer :: res
    end function __MANGLE(of_default)
 
 #undef __guard
