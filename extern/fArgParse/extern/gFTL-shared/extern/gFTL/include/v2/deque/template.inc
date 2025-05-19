@@ -29,7 +29,6 @@ end type __deque
 #define __T T
 #define __guard __deque_guard
 
-#line 1 "/Users/gxyd/Downloads/pFUnit-4.12.0/extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/parameters/define_derived_macros.m4"
 #define __T_type_id__  __T >> 3
 #define __T_kind__  1 << (__T & 07)
 
@@ -104,23 +103,9 @@ end type __deque
 #endif
 
 ! Intel fpp has issues with comma in a macro argument, so we do something a bit brute force here
-#ifdef __T_allocatable__
-#    define __T_declare_component__ __T_DECLARE__(__T_type__,__T_kindlen_component__)__T_dimension_component__, allocatable
-#else
-#    define __T_declare_component__ __T_DECLARE__(__T_type__,__T_kindlen_component__)__T_dimension_component__
-#endif
 #define __T_declare_result__ __T_DECLARE__(__T_type__,__T_kindlen_component__)__T_dimension_result__
-#define __T_declare_dummy__ __T_DECLARE__(__T_type__,__T_kindlen_dummy__)__T_dimension_dummy__
 #undef tmp
 
-#ifdef __T_name__
-#    define __T_declare_string__ __T_NAME__(__T_name__,__T_kindlen_string__)//__T_dimension_string__//__T_allocatable_string__
-#endif
-
-! If user defines __T_EQ we assume that it is elemental
-! for use in array comparisons.   If there is ever a reasonable
-! situation that violates this assumption, then a new token
-! will need to be added to deactivate this assumption.
 #ifdef __T_EQ
 #    define __T_EQ__(lhs,rhs) __T_EQ(lhs,rhs)
 #elif defined(__T_EQ_SCALAR__)
@@ -135,13 +120,13 @@ end type __deque
 #    endif
 #endif
 
-#ifdef __T_LT
-#    define __T_LT__(lhs,rhs) __T_LT(lhs,rhs)
-#elif defined(__T_LT_SCALAR__)
-#    if __T_rank == 0
-#        define __T_LT__(lhs,rhs) __T_LT_SCALAR__(lhs,rhs)
-#    endif
-#endif
+!#ifdef __T_LT
+!#    define __T_LT__(lhs,rhs) __T_LT(lhs,rhs)
+!#elif defined(__T_LT_SCALAR__)
+!#    if __T_rank == 0
+!#        define __T_LT__(lhs,rhs) __T_LT_SCALAR__(lhs,rhs)
+!#    endif
+!#endif
 
 
 #ifdef __T_FREE
@@ -200,4 +185,3 @@ end type __deque
    end function __MANGLE(of_default)
 
 #undef __guard
-#include "parameters/T/undef_internal.inc"
