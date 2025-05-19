@@ -8,8 +8,6 @@
 #define __UNLIMITED_POLYMORPHIC 56
 #endif
 
-#include "parameters/T/copy_T_to_deque_T.inc"
-
 #define __deque Deque
 #define __deque_guard deque_
 
@@ -28,7 +26,7 @@ end type __deque
 #undef __guard
    contains
 
-#define __T __deque_T
+#define __T T
 #define __guard __deque_guard
 
 #include "parameters/T/define_derived_macros.inc"
