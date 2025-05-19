@@ -1,5 +1,4 @@
 
-
 #include "parameters/T/copy_deque_T_to_internal_T.inc"
 #define __guard __deque_guard
 
