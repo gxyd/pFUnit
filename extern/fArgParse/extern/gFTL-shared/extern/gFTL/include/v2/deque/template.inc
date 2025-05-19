@@ -30,46 +30,24 @@ end type __deque
 #define __guard __deque_guard
 
 #line 1 "/Users/gxyd/Downloads/pFUnit-4.12.0/extern/fArgParse/extern/gFTL-shared/extern/gFTL/include/v2/parameters/define_derived_macros.m4"
-#if __T > 0
-#    define __T_type_id__  __T >> 3
-#    define __T_kind__  1 << (__T & 07)
+#define __T_type_id__  __T >> 3
+#define __T_kind__  1 << (__T & 07)
 
-#    define __T_DECLARE__(type,kindlen) __IDENTITY(type)__IDENTITY(kindlen)
-#    define __T_NAME__(type,kindlen) __IDENTITY(type)//__IDENTITY(kindlen)
+#define __T_DECLARE__(type,kindlen) __IDENTITY(type)__IDENTITY(kindlen)
+#define __T_NAME__(type,kindlen) __IDENTITY(type)//__IDENTITY(kindlen)
 !#    elif __T_type_id__ == __UNLIMITED_POLYMORPHIC__
 
-#        undef __T_DECLARE__
-#        undef __T_NAME__
-#        define __T_DECLARE__(type,kindlen) __IDENTITY(class(*))
-#        define __T_NAME__(type,kindlen) __IDENTITY("class(*)")
-#        define __T_polymorphic__
-#        define __T_type__ *
-#        define __T_name__ "*"
-#        if !defined(__T_default__)
-#            define __T_default_scalar__ NO_TYPE__
-#        endif
-
-
-#else
-! User defined derived type (or C_PTR, etc)
-
-!#    define __T_type__ __T
-!#    ifdef __T_name
-!#        define __T_name__ __T_name
-!#    endif
-!#    ifdef __T_polymorphic
-!#        define __T_polymorphic__
-!#        define __T_DECLARE__(t,kindlen) class(__IDENTITY(t)__IDENTITY(kindlen))
-!#        define __T_NAME__(name,kindlen) "class("//name//kindlen//")"
-!#    else
-!#        define __T_DECLARE__(t,kindlen) type(__IDENTITY(t)__IDENTITY(kindlen))
-!#        define __T_NAME__(name,kindlen) "type("//name//kindlen//")"
-!#    endif
-!#    if defined(__T_default)
-!#       define __T_default_scalar__ __T_default
-!#    endif
-
+#undef __T_DECLARE__
+#undef __T_NAME__
+#define __T_DECLARE__(type,kindlen) __IDENTITY(class(*))
+#define __T_NAME__(type,kindlen) __IDENTITY("class(*)")
+#define __T_polymorphic__
+#define __T_type__ *
+#define __T_name__ "*"
+#if !defined(__T_default__)
+#    define __T_default_scalar__ NO_TYPE__
 #endif
+
 
 #ifdef __T_KINDLEN
 #    define __T_KINDLEN__(context)  __T_KINDLEN(context)
@@ -99,67 +77,12 @@ end type __deque
 #    endif
 #endif
 
-#ifdef __T_rank
-#    if __T_rank == 1
-#        define __T_dimension_result__ , dimension(:)
-#        define __T_rank_string__ "1"
-#        define __T_shape_string__ ", dimension(:)"
-#    elif __T_rank == 2
-#        define __T_dimension_result__ , dimension(:,:)
-#        define __T_rank_string__ "2"
-#        define __T_shape_string__ ", dimension(:,:)"
-#    elif __T_rank == 3
-#        define __T_dimension_result__ , dimension(:,:,:)
-#        define __T_rank_string__ "3"
-#        define __T_shape_string__ ", dimension(:,:,:)"
-#    elif __T_rank == 4
-#        define __T_dimension_result__ , dimension(:,:,:,:)
-#        define __T_rank_string__ "4"
-#        define __T_shape_string__ ", dimension(:,:,:,:)"
-#    elif __T_rank == 5
-#        define __T_dimension_result__ , dimension(:,:,:,:,:)
-#        define __T_rank_string__ "5"
-#        define __T_shape_string__ ", dimension(:,:,:,:,:)"
-#    elif __T_rank == 6
-#        define __T_dimension_result__ , dimension(:,:,:,:,:,:)
-#        define __T_rank_string__ "6"
-#        define __T_shape_string__ ", dimension(:,:,:,:,:,:)"
-#    elif __T_rank == 7
-#        define __T_dimension_result__ , dimension(:,:,:,:,:,:,:)
-#        define __T_rank_string__ "7"
-#        define __T_shape_string__ ", dimension(:,:,:,:,:,:,:)"
-#    endif
-#    if defined(__T_shape)
-         ! fixed shape       
-#        define __T_dimension_component__ , __IDENTITY(dimension)__IDENTITY(__T_shape)
-#        ifdef __T_shape_string
-#            define __T_dimension_string__ ", "//__T_shape_string
-#        else
-#            define __T_dimension_string__ ", dimension(rank<"//__T_rank_string__//">)"
-#        endif
-#        ifndef __T_default__
-#            define __T_default__ __T_default_scalar__
-#        endif
-#    else
-         ! deferred shape
-#        define __T_dimension_component__ __T_dimension_result__
-#        define __T_dimension_string__ __T_shape_string__
-#        ifndef __T_default__
-#            define __T_default__ reshape([__T_type__ :: ],reshape([0],shape=[__T_rank],pad=[0]))
-#        endif
-#    endif
-#    define __T_dimension_dummy__ __T_dimension_component__
-
-
-#else
-! Scalar
-#    define __T_dimension_result__
-#    define __T_dimension_component__
-#    define __T_dimension_dummy__
-#    define __T_dimension_string__ ""
-#    ifdef __T_default_scalar__
-#        define __T_default__ __T_default_scalar__
-#    endif
+#define __T_dimension_result__
+#define __T_dimension_component__
+#define __T_dimension_dummy__
+#define __T_dimension_string__ ""
+#ifdef __T_default_scalar__
+#    define __T_default__ __T_default_scalar__
 #endif
 
 #if defined(__T_deferred) && !defined(__T_deferred__)
@@ -252,11 +175,6 @@ end type __deque
 #    endif
 #endif
 
-
-
-
-
-
    function __MANGLE(at_size_kind)(this, i, rc) result(res)
       class(__deque), target, intent(in) :: this
       integer(8), intent(in) :: i
@@ -280,8 +198,6 @@ end type __deque
       integer, intent(in) :: i
       __T_declare_result__, pointer :: res
    end function __MANGLE(of_default)
-
-#include "parameters/T/undef_derived_macros.inc"
 
 #undef __guard
 #include "parameters/T/undef_internal.inc"
